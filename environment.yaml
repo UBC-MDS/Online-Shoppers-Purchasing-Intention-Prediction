@@ -1,0 +1,12 @@
+name: online-shopping-prediction
+channels:
+  - defaults  
+  - conda-forge  
+dependencies:
+  - pandas
+  - scipy
+  - matplotlib
+  - scikit-learn
+  - ucimlrepo
+  - ipykernel
+  - vegafusion
