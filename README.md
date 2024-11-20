@@ -6,7 +6,7 @@ Authors: Julian Daduica @jdaduica, Stephanie Ta @Stephanie-Ta, and Wai Ming Wong
 A project summary will be added here.
 
 # Report
-The final report can be found here. # a link to the report will be inserted here
+The final report can be found [here](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/blob/main/src/online-shoppers-purchasing-intention-prediction.html)
 
 # Usage
 We are using a conda virtual environment so that our computational environment is reproducible.
@@ -21,3 +21,9 @@ To replicate our analysis:
     - Select the `Python [conda env:online-shopping-prediction]` option in the dropdown that pops up.
 6. Run the report from top to bottom in the JupyterLab web application:
     - Under the `Kernel` tab, click on `Restart Kernel and Run All Cells...`
+
+# Dependencies
+- `conda` (version 24.9.0 or higher)
+- `nb_conda_kernels` (version 2.3.1 or higher)
+- `jupyter lab` (version 4.2.0 or higher)
+- Python and packages listed in [environment.yaml](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/blob/main/environment.yaml)
