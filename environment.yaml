@@ -10,3 +10,4 @@ dependencies:
   - ucimlrepo
   - ipykernel
   - vegafusion
+  - altair
