@@ -27,3 +27,7 @@ To replicate our analysis:
 - `nb_conda_kernels` (version 2.3.1 or higher)
 - `jupyter lab` (version 4.2.0 or higher)
 - Python and packages listed in [environment.yaml](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/blob/main/environment.yaml)
+
+# License
+The code of this project licensed under the terms of the MIT license. If re-using/re-mixing please provide attribution and link to this webpage.  
+The project report is under Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.
