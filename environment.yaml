@@ -9,7 +9,7 @@ dependencies:
   - scikit-learn
   - ucimlrepo
   - ipykernel
-  - vegafusion
+  - vegafusion==1.6.9
   - altair
   - pip:
     - altair_ally>=0.1.1
