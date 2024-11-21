@@ -11,5 +11,5 @@ dependencies:
   - ipykernel
   - vegafusion
   - altair
-  pip:
+  - pip:
     - altair_ally>=0.1.1
