@@ -23,8 +23,9 @@ To replicate our analysis:
     - Under the `Kernel` tab, click on `Restart Kernel and Run All Cells...`
 
 # Dependencies
-- `conda` (version 24.9.0 or higher)
-- `mamba`(version 2.0 or higher)
+- `conda` (version 24.7.1 or higher)
+- `mamba`(version 1.5.8 or higher)
+- `conda-lock` (version 2.5.7 or higher)
 - `nb_conda_kernels` (version 2.3.1 or higher)
 - `jupyter lab` (version 4.2.0 or higher)
 - Python and packages listed in [environment.yaml](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/blob/main/environment.yaml)
