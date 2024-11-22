@@ -13,7 +13,7 @@ We are using a conda virtual environment so that our computational environment i
 
 To replicate our analysis:
 1. Clone this GitHub repository to your local machine and navigate to the project root.
-2. Create an environment from the environment by running the command `conda env create --file environment.yml` in terminal.
+2. Create an environment from the `conda-lock.yml` file by running the command `conda-lock install --name online-shopping-prediction conda-lock.yml` in terminal.
 3. Activate the environment by running the command `conda activate online-shopping-prediction`.
 4. Open JupyterLab by running the command `jupyter lab` in terminal.
 5. Change the kernel in the JupyerLab web application:
@@ -24,6 +24,7 @@ To replicate our analysis:
 
 # Dependencies
 - `conda` (version 24.9.0 or higher)
+- `mamba`(version 2.0 or higher)
 - `nb_conda_kernels` (version 2.3.1 or higher)
 - `jupyter lab` (version 4.2.0 or higher)
 - Python and packages listed in [environment.yaml](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/blob/main/environment.yaml)
