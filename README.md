@@ -6,7 +6,7 @@ Authors: Julian Daduica @jdaduica, Stephanie Ta @Stephanie-Ta, and Wai Ming Wong
 This study attempts to build a classification model using a logistic regression algorithm to predict whether an online shopper will make a purchase based on their website interaction behaviour. The final classifier model achieved an accuracy of 87.5% on an unseen test dataset. Compare this to a dummy classifier model that always predicts no purchase, with an accuracy of 83.5%. While the logistic regression model performed reasonably well, it did not account for the class imbalance in the dataset, where there purchase target class was significantly less than the no purchase target class. From our logistic regression model, we identified that features PageValue and ExitRate were most important when making predictions. This can suggest that these features are the most significant when determining whether a customer will purchase or not. This model can provide insight for businesses to increase revenue by targeting and optimizing these features in marketing or sales campaigns. Further research addressing class imbalance and exploring alternative models or algorithms could improve predictions, which will increase the model’s ability for businesses to utilize. 
 
 # Report
-The final report can be found [here](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/blob/main/src/online-shoppers-purchasing-intention-prediction.html)
+The final report can be found [here](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/blob/main/src/online_shoppers_purchasing_intention_prediction.ipynb)
 
 # Usage
 We are using a conda virtual environment so that our computational environment is reproducible.
