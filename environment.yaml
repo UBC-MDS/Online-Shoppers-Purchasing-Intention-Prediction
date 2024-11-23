@@ -14,5 +14,6 @@ dependencies:
   - ucimlrepo
   - vegafusion==1.6.9
   - vl-convert-python[version'>=1.6.0']
+  - nb_conda_kernels
   - pip:
     - altair_ally>=0.1.1
