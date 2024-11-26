@@ -4,16 +4,16 @@ channels:
   - defaults  
 dependencies:
   - python>=3.11,<3.13
-  - altair
-  - ipykernel
-  - matplotlib
-  - numpy
-  - pandas
-  - scikit-learn
-  - scipy
-  - ucimlrepo
+  - altair==5.4.1
+  - ipykernel==6.29.5
+  - matplotlib==3.9.2
+  - numpy==2.1.3
+  - pandas==2.2.3
+  - scikit-learn==1.5.2
+  - scipy==1.14.1
+  - ucimlrepo==0.0.7
   - vegafusion==1.6.9
   - vl-convert-python[version'>=1.6.0']
-  - nb_conda_kernels
+  - nb_conda_kernels==2.5.1
   - pip:
     - altair_ally>=0.1.1
