@@ -15,7 +15,7 @@ To replicate our analysis:
 1. Clone this GitHub repository to your local machine and navigate to the project root.
 2. Launch the virtual container by running the command `docker compose up` in terminal.
 3. To open JupyterLab, copy and paste the URL in your browser that appears in terminal that starts with `http://127.0.0.1:8888/lab?token=`.
-4. In JupyterLab, open our report `src\online_shoppers_purchasing_intention_prediction.ipynb`.
+4. In JupyterLab, open our report `src/online_shoppers_purchasing_intention_prediction.ipynb`.
 5. Run the report from top to bottom in the JupyterLab web application:
     - Under the `Kernel` tab, click on `Restart Kernel and Run All Cells...`
 
@@ -25,6 +25,23 @@ To exit and clean up the container:
 
 # Dependencies
 - [Docker](https://www.docker.com/)
+
+# How to Update the Container
+If you would like to add another package to the container,
+please have the following dependencies and follow the instructions below.
+
+## Developer Dependencies
+- `conda` (version 24.7.1 or higher)
+- `conda-lock` (version 2.5.7 or higher)
+- `mamba` (version 1.5.8 or higher)
+
+## How to Add a Package to the Container
+1. Create a new branch and add the new package with its version pinned in `environment.yaml`.
+2. Update the `conda-linux-64.lock` file by running the command `conda-lock -k explicit --file environment.yaml -p linux-64` in terminal.
+3. Ensure the Docker image runs properly by re-building the image locally.
+4. If the image runs properly, push the your changes to GitHub and the new image will be published on DockerHub automatically.
+5. Update `docker-compose.yml` to use the new image by changing the tag (`image: stephanieta/dsci522-online-shopping-project:<tag>`).
+6. Make a pull request to erge your changes to the `main` branch.
 
 # License
 The code of this project licensed under the terms of the MIT license. If re-using/re-mixing please provide attribution and link to this webpage.  
