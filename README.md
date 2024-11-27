@@ -19,6 +19,10 @@ To replicate our analysis:
 5. Run the report from top to bottom in the JupyterLab web application:
     - Under the `Kernel` tab, click on `Restart Kernel and Run All Cells...`
 
+To exit and clean up the container:
+1. `Ctrl` + `C` in terminal where you launched the container.
+2. Run the command `docker compose rm` in terminal.
+
 # Dependencies
 - [Docker](https://www.docker.com/)
 
