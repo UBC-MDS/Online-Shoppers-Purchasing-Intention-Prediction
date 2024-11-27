@@ -1,0 +1,8 @@
+services:
+  jupyter-notebook:
+    image: stephanieta/dsci522-online-shopping-project
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/home/jovyan
+    platform: linux/amd64
