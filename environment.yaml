@@ -18,3 +18,4 @@ dependencies:
   - nb_conda_kernels==2.5.1
   - pip:
     - altair_ally>=0.1.1
+    - deepchecks==0.18.1
