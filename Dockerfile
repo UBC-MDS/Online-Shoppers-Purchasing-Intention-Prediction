@@ -7,4 +7,5 @@ RUN mamba update --quiet --file /tmp/conda-linux-64.lock \
     && fix-permissions "${CONDA_DIR}" \
     && fix-permissions "/home/${NB_USER}"
 
-RUN pip install altair_ally>=0.1.1
+RUN pip install altair_ally>=0.1.1 \
+    deepchecks==0.18.1
