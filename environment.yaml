@@ -3,7 +3,7 @@ channels:
   - conda-forge  
   - defaults  
 dependencies:
-  - python>=3.11,<3.13
+  - python=3.11
   - altair==5.4.1
   - ipykernel==6.29.5
   - matplotlib==3.9.2
