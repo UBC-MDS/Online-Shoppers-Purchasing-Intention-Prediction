@@ -41,7 +41,7 @@ please have the following dependencies and follow the instructions below.
 3. Ensure the Docker image runs properly by re-building the image locally.
 4. If the image runs properly, push the your changes to GitHub and the new image will be published on DockerHub automatically.
 5. Update `docker-compose.yml` to use the new image by changing the tag (`image: stephanieta/dsci522-online-shopping-project:<tag>`).
-6. Make a pull request to erge your changes to the `main` branch.
+6. Make a pull request to merge your changes to the `main` branch.
 
 # License
 The code of this project licensed under the terms of the MIT license. If re-using/re-mixing please provide attribution and link to this webpage.  
