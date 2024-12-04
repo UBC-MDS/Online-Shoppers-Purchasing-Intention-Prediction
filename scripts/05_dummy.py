@@ -30,7 +30,7 @@ def main(X_train_data, y_train_data, model_to, scores_to):
     dummy_classifier.fit(X_train, y_train)
 
     # save baseline model object
-    with open(scores_to, 'wb') as f:
+    with open(model_to, 'wb') as f:
         pickle.dump(dummy_classifier, f)
     
     dummy_cv_scores = pd.DataFrame(
