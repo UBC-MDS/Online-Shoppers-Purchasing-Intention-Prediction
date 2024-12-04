@@ -20,11 +20,36 @@ import altair as alt
 @click.option('--figure-to', type=str, help="Path to directory where the figure of feature weights will be written to")
 def main(logreg_model_from, scores_to, scores_to, figure_to):
     
-    # read in model
+    # TODO: read in model
 
-    # save weights in csv
+    # find weights of each feature
+    best_estimator = random_search.best_estimator_
+    feature_names = best_estimator['columntransformer'].get_feature_names_out() # get feature names
+    weights = best_estimator["logisticregression"].coef_ # get feature coefficients
 
-    # save figure as png
+    feat_weights = pd.DataFrame(weights, columns = feature_names)
+    feat_weights = feat_weights.T.reset_index()
+    feat_weights = feat_weights.rename(columns={'index': 'feature', 0: "weight"})
+    feat_weights['feature'] = feat_weights['feature'].str.split('__', expand = True)[1]
+
+    # average the weights of each overall feature and 
+    # absolute value the weights so that positive and negative ones don't cancel eachother out
+    feat_weights['overall_feature'] = feat_weights['feature'].str.split('_', expand = True)[0]
+    feat_weights['absolute_value_weight'] = abs(feat_weights['weight'])
+    absolute_feat_weights = pd.DataFrame(feat_weights.groupby('overall_feature'
+        ).mean(numeric_only=True
+        ).sort_values('absolute_value_weight', ascending = False
+        )['absolute_value_weight']).reset_index()
+
+    # TODO: save weights in csv
+    
+
+    # visualize the magnitude of the weights in a bar graph
+    alt.Chart(absolute_feat_weights).mark_bar().encode(
+        x = alt.X('absolute_value_weight').title('Absolute Value Weight'),
+        y = alt.Y('overall_feature').sort('x').title('Overall Feature')
+
+    # TODO: save figure as png
 
 
 if __name__ == "__main__":
