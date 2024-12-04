@@ -9,9 +9,9 @@
 #
 # Usage: python scripts/04_preprocess_and_validate.py \
 # --train-data=data/processed/train_df.csv \
-# --test-data=data/processed/train_df.csv \
-# --X-train-data=data/processed/train_df.csv \
-# --X-test-data=data/processed/train_df.csv \
+# --test-data=data/processed/test_df.csv \
+# --X-train-data=data/processed/X_train.csv \
+# --X-test-data=data/processed/X_test.csv \
 
 import pandas as pd
 from deepchecks.tabular.checks import FeatureLabelCorrelation, FeatureFeatureCorrelation
