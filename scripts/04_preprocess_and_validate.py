@@ -7,7 +7,11 @@
 # training data for anomalous correlations between target variable and features
 # and anomalous correlations between features
 #
-# Usage: python 04_preprocess_and_validate.py
+# Usage: python scripts/04_preprocess_and_validate.py \
+# --train-data=data/processed/train_df.csv \
+# --test-data=data/processed/train_df.csv \
+# --X-train-data=data/processed/train_df.csv \
+# --X-test-data=data/processed/train_df.csv \
 
 import pandas as pd
 from deepchecks.tabular.checks import FeatureLabelCorrelation, FeatureFeatureCorrelation
@@ -43,10 +47,10 @@ def main(train_data, test_data, X_train_data, X_test_data):
                                       "ProductRelated"])
     
     # update saved data 
-    train_df.to_csv("../data/processed/train_df.csv")
-    test_df.to_csv("../data/processed/test_df.csv")
-    X_train.to_csv("../data/processed/X_train.csv")
-    X_test.to_csv("../data/processed/X_test.csv")
+    train_df.to_csv(train_data)
+    test_df.to_csv(test_data)
+    X_train.to_csv(X_train_data)
+    X_test.to_csv(X_test_data)
     
     train_df_data_valid = Dataset(train_df, label="Revenue", cat_features=[])
     
