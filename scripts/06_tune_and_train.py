@@ -2,7 +2,10 @@
 # author: Stephanie Ta
 # date: 2024-12-03
 #
-# This script 
+# This script trains and tunes the logistic regression model
+# using RandomSearchCV, then saves the model with the hyperparameters that
+# gives the best mean cross validation accuracy.
+# It also saves that mean cross validation accuracy score.
 #
 # Usage: python scripts/06_tune_and_train.py \
 # --X-train-data=data/processed/X_train.csv \
@@ -76,7 +79,7 @@ def main(X_train_data, y_train_data, model_to, scores_to):
         
     # access best C using: random_search.best_params_['logisticregression__C']
 
-    # save mean logistive regression validation accuracy
+    # save mean logistic regression validation accuracy
     model_results = pd.read_csv(scores_to)
     model_results['mean_validation_accuracy'][1] = random_search.best_score_
     model_results.to_csv(scores_to)
