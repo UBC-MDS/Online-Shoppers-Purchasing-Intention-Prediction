@@ -11,7 +11,7 @@
 # --X-train-data=data/processed/X_train.csv \
 # --y-train-data=data/processed/y_train.csv \
 # --model-to=results/models/logreg_classifier.pickle \
-# --scores-to=results/tables/model_scores.csv \
+# --scores-to=results/tables/model_scores.csv
 
 import pandas as pd
 from sklearn.compose import make_column_transformer
