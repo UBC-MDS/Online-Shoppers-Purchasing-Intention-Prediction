@@ -10,6 +10,7 @@
 # --dummy-model-from=results/models/dummy_classifier.pickle \
 # --logreg-model-from=results/models/logreg_classifier.pickle \
 # --scores-to=results/tables/model_scores.csv \
+# --figure-to=results/figures/fig4_feat_weights.png
 
 import pandas as pd
 import pickle
@@ -20,7 +21,9 @@ import altair as alt
 @click.option('--figure-to', type=str, help="Path to directory where the figure of feature weights will be written to")
 def main(logreg_model_from, scores_to, scores_to, figure_to):
     
-    # TODO: read in model
+    # read in saved logistic regression model object
+    with open(logreg_model_from, 'rb') as f:
+        random_search = pickle.load(f)
 
     # find weights of each feature
     best_estimator = random_search.best_estimator_
@@ -41,16 +44,16 @@ def main(logreg_model_from, scores_to, scores_to, figure_to):
         ).sort_values('absolute_value_weight', ascending = False
         )['absolute_value_weight']).reset_index()
 
-    # TODO: save weights in csv
-    
+    # save weights in csv
+    absolute_feat_weights.to_csv(scores_to)
 
     # visualize the magnitude of the weights in a bar graph
-    alt.Chart(absolute_feat_weights).mark_bar().encode(
+    magnitude_bar_graph = alt.Chart(absolute_feat_weights).mark_bar().encode(
         x = alt.X('absolute_value_weight').title('Absolute Value Weight'),
         y = alt.Y('overall_feature').sort('x').title('Overall Feature')
 
-    # TODO: save figure as png
-
+    # save figure as png
+    magnitude_bar_graph.save(figure_to)
 
 if __name__ == "__main__":
     main()
