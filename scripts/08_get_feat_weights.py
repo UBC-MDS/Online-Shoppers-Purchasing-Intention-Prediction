@@ -1,13 +1,12 @@
 # 08_get_feat_weights.py
 # author: Stephanie Ta
-# date: 2024-12-03
+# date: 2024-12-04
 #
 # This script gets the feature weights (as magnitude) from the logistic regression model
 # saves them in a table. It also visualizes the weights in a bar chart and
 # saves the bar chart.
 #
 # Usage: python 08_get_feat_weights.py \
-# --dummy-model-from=results/models/dummy_classifier.pickle \
 # --logreg-model-from=results/models/logreg_classifier.pickle \
 # --scores-to=results/tables/model_scores.csv \
 # --figure-to=results/figures/fig4_feat_weights.png
