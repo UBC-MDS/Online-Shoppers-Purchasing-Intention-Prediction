@@ -14,9 +14,17 @@ from deepchecks.tabular.checks import FeatureLabelCorrelation, FeatureFeatureCor
 from deepchecks.tabular import Dataset
 
 @click.command()
-@click.option()
-
-def main():
+@click.option('--train-data', type=str, help="Path to training data")
+@click.option('--test-data', type=str, help="Path to testing data")
+@click.option('--X-train-data', type=str, help="Path to X training data (features only)")
+@click.option('--X-test-data', type=str, help="Path to X testing data (features only)")
+def main(train_data, test_data, X_train_data, X_test_data):
+    # read in data
+    train_df = pd.read_csv(train_data)
+    test_df = pd.read_csv(test_data)
+    X_train = pd.read_csv(X_train_data)
+    X_test = pd.read_csv(X_test_data)
+    
     # drop features with high feature - feature correlations
     train_df = train_df.drop(columns = ["Administrative", 
                                         "Informational", 
@@ -25,6 +33,20 @@ def main():
     test_df = test_df.drop(columns = ["Administrative", 
                                       "Informational", 
                                       "ProductRelated"])
+
+    X_train = X_train.drop(columns = ["Administrative", 
+                                      "Informational", 
+                                      "ProductRelated"])
+    
+    X_test = X_test.drop(columns = ["Administrative", 
+                                      "Informational", 
+                                      "ProductRelated"])
+    
+    # update saved data 
+    train_df.to_csv("../data/processed/train_df.csv")
+    test_df.to_csv("../data/processed/test_df.csv")
+    X_train.to_csv("../data/processed/X_train.csv")
+    X_test.to_csv("../data/processed/X_test.csv")
     
     train_df_data_valid = Dataset(train_df, label="Revenue", cat_features=[])
     
