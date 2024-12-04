@@ -7,7 +7,7 @@
 # Usage: python scripts/07_score.py \
 # --dummy-model-from=results/models/dummy_classifier.pickle \
 # --logreg-model-from=results/models/logreg_classifier.pickle \
-# --scores-to=results/tables/model_scores.csv \
+# --scores-to=results/tables/model_scores.csv
 
 import pandas as pd
 import pickle
