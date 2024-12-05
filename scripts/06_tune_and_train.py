@@ -88,7 +88,7 @@ def main(x_train_data, y_train_data, model_to, scores_to):
 
     # save mean logistic regression validation accuracy
     model_results = pd.read_csv(scores_to)
-    model_results['mean_validation_accuracy'][1] = random_search.best_score_
+    model_results.loc[1, 'mean_validation_accuracy'] = random_search.best_score_
     model_results.to_csv(scores_to)
 
 if __name__ == "__main__":
