@@ -90,90 +90,17 @@ To investigate the features in our dataset, we first visualized the correlation 
 We also plotted the distribution of each numeric feature using density plots and the distribution of each categorical feature using bar plots. These plots were coloured by the target (false: blue and true: orange). For the numeric features, we can see that the target class distributions overlap and are of similar shape, but we decided to keep these features in our model since they may be useful for prediction in ombination with other features. For the catagorical features, the target class dsitributions seem to be similar, but again we decided to keep these features in our model since they may be useful for prediction in ombination with other features. We also noticed that there is an imbalance in our dataset in which there are more observations with the target = false and less observations with the target = true. We did not account for this imbalance in our analysis (i.e. the model and scoring metric) since that would be out of the scope for this project, which relies on only DSCI 571 knowledge.
 
 
-![Figure 1. Distribution of numeric features for each target class.](../results/feature_density.png){#fig-feature_density width=65%}
+![Distribution of numeric features for each target class.](../results/images/feature_density.png){#fig-feature_density width=65%}
 
 
-![Figure 2. Distribution of categorical features for each target class.](../results/feature_bar_plot.png){#fig-feature_bar_plot width=65%}
+![Distribution of categorical features for each target class.](../results/images/feature_bar_plot.png){#fig-feature_bar_plot width=65%}
 
 
-![Figure 3. Correlation plot between all features in dataset](../results/correlation_heatmap.png){#fig-correlation_heatmap width=65%}
+![Correlation plot between all features in dataset](../results/images/correlation_heatmap.png){#fig-correlation_heatmap width=65%}
 
 
-
-```{python}
-# drop features with high feature - feature correlations
-train_df = train_df.drop(columns = ["Administrative", 
-                                    "Informational", 
-                                    "ProductRelated"])
-
-test_df = test_df.drop(columns = ["Administrative", 
-                                  "Informational", 
-                                  "ProductRelated"])
-```
-
-```{python}
-train_df_data_valid = Dataset(train_df, label="Revenue", cat_features=[])
-
-# the maximum threshold allowed
-threshold = 0.80
-
-# validate training data for anomalous correlations between target variable and features
-check_feature_target_corr = FeatureLabelCorrelation().add_condition_feature_pps_less_than(threshold)
-check_feature_terget_corr_result = check_feature_target_corr.run(dataset = train_df_data_valid)
-
-if not check_feature_terget_corr_result.passed_conditions():
-    raise ValueError(f"Feature-target correlation exceeds the maximum acceptable threshold of {threshold}.")
-
-# validate training data anomalous correlations between features
-check_feature_feature_corr = FeatureFeatureCorrelation().add_condition_max_number_of_pairs_above_threshold(threshold = threshold)
-check_feature_feature_corr_result = check_feature_feature_corr.run(dataset = train_df_data_valid)
-
-if not check_feature_feature_corr_result.passed_conditions():
-    raise ValueError(f"Feature-feature correlation exceeds the maximum acceptable threshold of {threshold}.")
-```
-
-```{python}
-# create baseline model to compare final model to
-dummy_classifier = DummyClassifier()
-dummy_classifier.fit(X_train, y_train)
-dummy_cv_scores = pd.DataFrame(
-    cross_validate(dummy_classifier, X_train, y_train, cv = 5, return_train_score = True))
-mean_dummy_validation_accuracy = dummy_cv_scores['test_score'].mean()
-mean_dummy_validation_accuracy
-```
 
 We chose to use a logistic regression model for our classification model. To find the model with the highest acuracy in predicting our target, we used 5-fold cross-validation to select our best value of the C hyperparameter. We found that the best C was 0.768.
-
-```{python}
-# lists of each type of feature
-numeric_cols = ['Administrative', 'Administrative_Duration',
-                'Informational', 'Informational_Duration',
-                'ProductRelated', 'ProductRelated_Duration',
-                'BounceRates', 'ExitRates',
-                'PageValues', 'SpecialDay']
-categorical_cols = ['Weekend', 'OperatingSystems',
-                    'Browser', 'Region',
-                    'TrafficType', 'VisitorType']
-ordinal_cols = ['Month']
-```
-
-```{python}
-# make preproccessor, note imputation is not needed since there are no null values in the data set
-month_levels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-preprocessor = make_column_transformer(
-    (StandardScaler(), numeric_cols),
-    (OneHotEncoder(sparse_output=False, handle_unknown='ignore'), categorical_cols),
-    (OrdinalEncoder(categories=[month_levels]), ordinal_cols)
-)
-```
-
-```{python}
-# make pipeline including preprocessor and logistic regression model
-log_reg_pipe = make_pipeline(
-    preprocessor, LogisticRegression(max_iter=2000, random_state=123)
-)
-```
 
 From cross-validation, we found that our best logistic regression model with C = 0.768 yielded an validation accuracy score of 88.6%, which is slightly better (3.7%) compared to the validation accuracy score of our dummy classifier using a most-frequent strategy (84.9%).
 
@@ -202,52 +129,21 @@ print("Best score: %0.3f" % (random_search.best_score_))
 After testing our model using the testing data, we found that our best logistic regression model with C = 0.768 had a test accuracy score of 87.6%, which is again a bit better (4.1%) that the test accuracy score of our dummy classifier using a most-frequent strategy (83.5%).
 
 ```{python}
-# score dummy and best logistic regression model on test set
-dummy_test_score = dummy_classifier.score(X_test, y_test)
-log_reg_test_score = random_search.score(X_test, y_test)
+#| label: tbl-dummy_bestmodel_scores
+#| tbl-cap: The comparison of scores between Dummy Classifier and Logistic Regression model with the best parameters.
+#| echo: false
 
-
-print("Dummy classifier test score: %0.3f" % dummy_test_score)
-print("Best logistic regression model test score: %0.3f" % log_reg_test_score)
+modelscores_table = pd.read_csv("../results/tables/model_scores.csv")
+Markdown(modelscores_table.to_markdown(index = False))
 ```
 
 To find out how important each feature is considered by our model for predicting the target class, we investigated the model's weight of each feature. We found that the `ExitRates` and `PagesValues` features seem to be the most important for determining the target.
 
-```{python}
-# find weights of each feature
-best_estimator = random_search.best_estimator_
-feature_names = best_estimator['columntransformer'].get_feature_names_out() # get feature names
-weights = best_estimator["logisticregression"].coef_ # get feature coefficients
 
-feat_weights = pd.DataFrame(weights, columns = feature_names)
-feat_weights = feat_weights.T.reset_index()
-feat_weights = feat_weights.rename(columns={'index': 'feature', 0: "weight"})
-feat_weights['feature'] = feat_weights['feature'].str.split('__', expand = True)[1]
-```
-
-```{python}
-# average the weights of each overall feature
-
-feat_weights['overall_feature'] = feat_weights['feature'].str.split('_', expand = True)[0]
-
-# absolute value the weights so that positive and negative ones don't cancel eachother out
-feat_weights['absolute_value_weight'] = abs(feat_weights['weight'])
-
-absolute_feat_weights = pd.DataFrame(feat_weights.groupby('overall_feature'
-    ).mean(numeric_only=True
-    ).sort_values('absolute_value_weight', ascending = False
-    )['absolute_value_weight']).reset_index()
+![Model features and their associated absolute value weight.](../results/images/fig4_feat_weights.png){#fig-feature_bar_plot width=65%}
 
 
-alt.Chart(absolute_feat_weights).mark_bar().encode(
-    x = alt.X('absolute_value_weight').title('Absolute Value Weight'),
-    y = alt.Y('overall_feature').sort('x').title('Overall Feature')
-)
-```
-
-Figure 4. Model features and their associated absolute value weight.
-
-Our model achieves a high accuracy score of !!!!!!!87.6%, suggesting its potential usefulness in predicting whether a customer will purchase a product based on their behavioral and interaction data with a business's website. However, its performance is only marginally better than a model that always predicts a customer will not make a purchase (accuracy = !!!!!!!!83.5%).
+Our model achieves a high accuracy score of 87.6%, suggesting its potential usefulness in predicting whether a customer will purchase a product based on their behavioral and interaction data with a business's website. However, its performance is only marginally better than a model that always predicts a customer will not make a purchase (accuracy = 83.5%).
 
 The analysis could be enhanced by addressing the imbalance in the target classes within our data and by using alternative scoring metrics. This approach might result in a better-performing model and a more robust evaluation. Additionally, exploring other classification models, such as SVM with RBF kernel and KNN, and comparing their performance to our logistic regression model could provide valuable insights.
 
