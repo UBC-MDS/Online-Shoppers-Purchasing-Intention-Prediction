@@ -129,10 +129,10 @@ modelscores_table = modelscores_table.rename(columns={'model': 'Model', 'test_ac
 Markdown(modelscores_table.to_markdown(index = False))
 ```
 
-To find out how important each feature is considered by our model for predicting the target class, we investigated the model's weight of each feature in [@fig-feature_bar_plot]. We found that the `ExitRates` and `PagesValues` features seem to be the most important for determining the target.
+To find out how important each feature is considered by our model for predicting the target class, we investigated the model's weight of each feature in [@fig-feature_weight_bar_plot]. We found that the `ExitRates` and `PagesValues` features seem to be the most important for determining the target.
 
 
-![Model features and their associated absolute value weight.](../results/images/fig4_feat_weights.png){#fig-feature_bar_plot width=85%}
+![Model features and their associated absolute value weight.](../results/images/fig4_feat_weights.png){#fig-feature_weight_bar_plot width=85%}
 
 
 Our model achieves a high accuracy score of `{python} logreg_test_score`%, suggesting its potential usefulness in predicting whether a customer will purchase a product based on their behavioral and interaction data with a business's website. However, its performance is only marginally better than a model that always predicts a customer will not make a purchase (accuracy = `{python} dummy_test_score`%).
