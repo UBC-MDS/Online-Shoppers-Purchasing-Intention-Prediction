@@ -115,14 +115,14 @@ div.csl-indent {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>The growth of online shopping or e-commerce has completely changed how people shop. Online shopping provides the convenience of exploring many different online stores effortlessly from their homes. This gives people more freedom over their time and choices. With this, retail e-commerce sales are estimated to exceed 4.1 trillion U.S. dollars worldwide in 2024 from roughly 2.7 billion online shoppers [<span class="citation" data-cites="commerce2024ecommerce">Commerce (<a href="#ref-commerce2024ecommerce" role="doc-biblioref">2024</a>)</span>]<span class="citation" data-cites="taheer2024online">(<a href="#ref-taheer2024online" role="doc-biblioref">Taheer 2024</a>)</span>. In an evergrowing consumerism society, it is important to understand consumers’ behaviours in addition to their intentions. This can allow businesses to optimize the online shopping experience and maximize revenue in such a massive industry. When shopping in person, a store employee may find it easy to determine a person’s purchasing intention through various social cues. However, while shopping online, companies and businesses find it much more difficult to decide on the intentions of their customers. Businesses need to find solutions from data on user interactions such as page clicks, time spent on pages, time of day or year, and much more. With the evergrowing increase in website traffic, businesses must distinguish between visitors with strong purchasing intentions and those who are simply browsing.</p>
-<p>Machine learning is a powerful tool we can utilize to analyze and predict online shoppers purchasing intentions based on behavioural and interaction data. Using machine learning techniques, we can use algorithms and computation to analyze various features such as bounce rates, visitor type, time of year, and many others to identify patterns which can help predict purchasing intention. In this study, we aim to use a machine learning algorithm to predict online shoppers purchasing intentions. This will allow us to extract meaningful insights from user data. In such a lucrative field, determining purchasing intentions is vital to these companies and businesses for increasing revenue. This can help companies and businesses find optimal sales and marketing techniques, or personalize each customer experience on their website.</p>
+<p>Machine learning is a powerful tool we can utilize to analyze and predict online shoppers purchasing intentions based on behavioral and interaction data. Using machine learning techniques, we can use algorithms and computation to analyze various features such as bounce rates, visitor type, time of year, and many others to identify patterns which can help predict purchasing intention. In this study, we aim to use a machine learning algorithm to predict online shoppers purchasing intentions. This will allow us to extract meaningful insights from user data. In such a lucrative field, determining purchasing intentions is vital to these companies and businesses for increasing revenue. This can help companies and businesses find optimal sales and marketing techniques, or personalize each customer experience on their website.</p>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p>The dataset used was sourced from the UCI Machine Learning Repository <span class="citation" data-cites="sakar2018uci">(<a href="#ref-sakar2018uci" role="doc-biblioref">Sakar et al. 2018</a>)</span> and can be found <a href="https://archive.ics.uci.edu/ml/datasets/Online+Shoppers+Purchasing+Intention+Dataset">here</a>. Each row in the dataset represents a web session on an e-commerce website, including details such as pages visited, time spent, and “Google Analytics” metrics for each page, such as “Bounce Rate”, “Exit Rate”, and “Page Value”. The “Special Day” variable highlights special events, while other web client attributes include OS, browser, region, traffic type, visitor type, and visit timing.</p>
-<p>Specifically, our target in the dataset is if the page vistor made a purchase or not (<code>Revenue</code>, true or false)</p>
+<p>Specifically, our target in the dataset is if the page visitor made a purchase or not (<code>Revenue</code>, true or false)</p>
 <p>The features that are in the dataset are:<br> - The number of account management pages the visitor visited (<code>Administrative</code>)<br> - The amount of time in seconds that the visitor spent on account management pages (<code>Administrative_Duration</code>)<br> - The number of informational pages the visitor visited (<code>Informational</code>)<br> - The amount of time in seconds that the visitor spent on informational pages (<code>Informational_Duration</code>)<br> - The number of product related pages the visitor visited (<code>ProductRelated</code>)<br> - The amount of time in seconds that the visitor spent on product related pages (<code>ProductRelated_Duration</code>)<br> - The average bounce rate of the pages the visitor visited (<code>BounceRates</code>)<br> - The average exit rate value of the pages that the visitor visited (<code>ExitRates</code>)<br> - The average page value of the pages that the visitor visited (<code>PageValues</code>)<br> - How close the time of visiting was to a special day, such as Mother’s Day (<code>SpecialDay</code>)<br> - The operating system of the visitor (<code>OperatingSystems</code>)<br> - The browser of the visitor (<code>Browser</code>)<br> - The region from which the visitor started the session from (<code>Region</code>)<br> - How the visitor entered the website, such as a banner, SMS, etc. (<code>TrafficType</code>)<br> - The visitor type, such as “new visitor”, “returning visitor”, etc. (<code>VisitorType</code>)<br> - If the visitor visited the website on a weekend (<code>Weekend</code>)<br> - The month in which the visitor visited the website (<code>Month</code>)</p>
 <p>Information about the target and features was sourced from Sakar et al.’s study <span class="citation" data-cites="sakar2018uci">(<a href="#ref-sakar2018uci" role="doc-biblioref">Sakar et al. 2018</a>)</span>.</p>
 <p>For data validation, we verified our data using the information provided above. There are no null values in any columns, and the data types are as expected. We also performed range checks using common sense, such as ensuring that the maximum amount of time in seconds within a day does not exceed 24 x 60 x 60 = 86,400.</p>
@@ -136,12 +136,12 @@ div.csl-indent {
 </section>
 <section id="results-and-discussion" class="level2">
 <h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
-<p>To investigate the features in our dataset, we first visualized the correlation between each pair of features using a heatmap. From this, we can see that feautres are not too correlated with each other, and strong correlations only appear when a feature is compared to itself.</p>
-<p>We also plotted the distribution of each numeric feature using density plots and the distribution of each categorical feature using bar plots. These plots were coloured by the target (false: blue and true: orange). For the numeric features, we can see that the target class distributions overlap and are of similar shape, but we decided to keep these features in our model since they may be useful for prediction in ombination with other features. For the catagorical features, the target class dsitributions seem to be similar, but again we decided to keep these features in our model since they may be useful for prediction in ombination with other features. We also noticed that there is an imbalance in our dataset in which there are more observations with the target = false and less observations with the target = true. We did not account for this imbalance in our analysis (i.e.&nbsp;the model and scoring metric) since that would be out of the scope for this project, which relies on only DSCI 571 knowledge.</p>
+<p>To investigate the features in our dataset, we first visualized the correlation between each pair of features using a heatmap. From this, we can see that feautures are not too correlated with each other, and strong correlations only appear when a feature is compared to itself.</p>
+<p>We also plotted the distribution of each numeric feature using density plots and the distribution of each categorical feature using bar plots. These plots were coloured by the target (false: blue and true: orange). For the numeric features, we can see that the target class distributions overlap and are of similar shape, but we decided to keep these features in our model since they may be useful for prediction in combination with other features. For the categorical features, the target class distributions seem to be similar, but again we decided to keep these features in our model since they may be useful for prediction in combination with other features. We also noticed that there is an imbalance in our dataset in which there are more observations with the target = false and less observations with the target = true. We did not account for this imbalance in our analysis (i.e.&nbsp;the model and scoring metric) since that would be out of the scope for this project, which relies on only DSCI 571 knowledge.</p>
 <div id="fig-feature_density" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-feature_density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../results/images/feature_density.png" class="img-fluid figure-img" style="width:65.0%">
+<img src="../results/images/feature_density.png" class="img-fluid figure-img" style="width:85.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-feature_density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Distribution of numeric features for each target class.
@@ -151,7 +151,7 @@ Figure&nbsp;1: Distribution of numeric features for each target class.
 <div id="fig-feature_bar_plot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-feature_bar_plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../results/images/feature_bar_plot.png" class="img-fluid figure-img" style="width:65.0%">
+<img src="../results/images/feature_bar_plot.png" class="img-fluid figure-img" style="width:85.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-feature_bar_plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Distribution of categorical features for each target class.
@@ -161,55 +161,70 @@ Figure&nbsp;2: Distribution of categorical features for each target class.
 <div id="fig-correlation_heatmap" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-correlation_heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../results/images/correlation_heatmap.png" class="img-fluid figure-img" style="width:65.0%">
+<img src="../results/images/correlation_heatmap.png" class="img-fluid figure-img" style="width:85.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-correlation_heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Correlation plot between all features in dataset
 </figcaption>
 </figure>
 </div>
-<p>We chose to use a logistic regression model for our classification model. To find the model with the highest acuracy in predicting our target, we used 5-fold cross-validation to select our best value of the C hyperparameter. We found that the best C was 0.768.</p>
-<p>From cross-validation, we found that our best logistic regression model with C = 0.768 yielded an validation accuracy score of 88.6%, which is slightly better (3.7%) compared to the validation accuracy score of our dummy classifier using a most-frequent strategy (84.9%).</p>
-<p>After testing our model using the testing data, we found that our best logistic regression model with C = 0.768 had a test accuracy score of 87.6%, which is again a bit better (4.1%) that the test accuracy score of our dummy classifier using a most-frequent strategy (83.5%).</p>
-<div class="cell" data-execution_count="3">
-<div id="tbl-dummy_bestmodel_scores" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="3">
+<p>We chose to use a logistic regression model for our classification model. To find the model with the highest accuracy in predicting our target, we used 5-fold cross-validation to select our best value of the C hyperparameter. We found that the best C was 0.115.</p>
+<p>From cross-validation , we found that our best logistic regression model with C = 0.115 yielded an validation accuracy score of 88.6%, which is slightly better (3.7%) compared to the validation accuracy score of our dummy classifier using a most-frequent strategy (84.9%).<a href="#tbl-validation_scores" class="quarto-xref">Table&nbsp;1</a></p>
+<div class="cell" data-execution_count="4">
+<div id="tbl-validation_scores" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="4">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dummy_bestmodel_scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: The comparison of scores between Dummy Classifier and Logistic Regression model with the best parameters.
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-validation_scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: The comparison of validation scores between Dummy Classifier and Logistic Regression model.
 </figcaption>
-<div aria-describedby="tbl-dummy_bestmodel_scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="9">
+<div aria-describedby="tbl-validation_scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="14">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 13%">
-<col style="width: 26%">
-<col style="width: 27%">
-<col style="width: 16%">
-</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Unnamed: 0.1</th>
-<th style="text-align: right;">Unnamed: 0</th>
-<th style="text-align: left;">model</th>
-<th style="text-align: right;">mean_validation_accuracy</th>
-<th style="text-align: right;">test_accuracy</th>
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">Validation Score</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
 <td style="text-align: left;">Dummy Model</td>
 <td style="text-align: right;">0.849496</td>
-<td style="text-align: right;">nan</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
 <td style="text-align: left;">Logistic Regression Model</td>
 <td style="text-align: right;">0.886108</td>
-<td style="text-align: right;">nan</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>After testing our model using the testing data, we found that our best logistic regression model with C = 0.115 had a test accuracy score of 87.6%, which is again a bit better (4.1%) that the test accuracy score of our dummy classifier using a most-frequent strategy (83.5%). <a href="#tbl-test_scores" class="quarto-xref">Table&nbsp;2</a></p>
+<div class="cell" data-execution_count="5">
+<div id="tbl-test_scores" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="5">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-test_scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: The comparison of test scores between Dummy Classifier and Logistic Regression model with the best parameters.
+</figcaption>
+<div aria-describedby="tbl-test_scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="15">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">Test Score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Dummy Model</td>
+<td style="text-align: right;">0.835361</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Logistic Regression Model</td>
+<td style="text-align: right;">0.875642</td>
 </tr>
 </tbody>
 </table>
@@ -222,7 +237,7 @@ Table&nbsp;1: The comparison of scores between Dummy Classifier and Logistic Reg
 <div id="fig-feature_bar_plot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-feature_bar_plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../results/images/fig4_feat_weights.png" class="img-fluid figure-img" style="width:65.0%">
+<img src="../results/images/fig4_feat_weights.png" class="img-fluid figure-img" style="width:85.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-feature_bar_plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Model features and their associated absolute value weight.
