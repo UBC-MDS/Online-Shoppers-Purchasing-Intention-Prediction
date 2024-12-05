@@ -1,0 +1,259 @@
+---
+title: "Online Shoppers Purchasing Intention Prediction"
+author: "Julian Daduica, Stephanie Ta, and Wai Ming Wong"
+date: "2024/12/04"
+format:
+    html:
+        toc: true
+        toc-depth: 2
+    pdf:
+        toc: true
+        toc-depth: 2
+bibliography: references.bib
+execute:
+    echo: false
+    warning: false
+editor: visual
+---
+
+```{python}
+import pandas as pd
+from IPython.display import Markdown, display
+from tabulate import tabulate
+import pickle
+```
+
+```{python}
+test_scores_df = pd.read_csv("../results/tables/test_scores.csv").round(2)
+#test_scores_df = test_scores_df.style.format().hide()
+test_scores_df = test_scores_df
+confusion_df=pd.read_csv("../results/tables/confusion_matrix.csv", index_col='class')
+confusion_df.rename(columns={'Benign':'Predicted: Benign'}, inplace=True)
+confusion_df.index.names = ['Actual label:']
+with open('../results/models/cancer_pipeline.pickle', 'rb') as f:
+    cancer_fit = pickle.load(f)
+```
+
+## Summary
+
+This study attempts to build a classification model using a logistic regression algorithm to predict whether an online shopper will make a purchase based on their website interaction behaviour. The final classifier model achieved an accuracy of 87.6% on an unseen test dataset. Compare this to a dummy classifier model that always predicts no purchase, with an accuracy of 83.5%. While the logistic regression model performed reasonably well, it did not account for the class imbalance in the dataset, where there purchase target class was significantly less than the no purchase target class. From our logistic regression model, we identified that features PageValue and ExitRate were most important when making predictions. This can suggest that these features are the most significant when determining whether a customer will purchase or not. This model can provide insight for businesses to increase revenue by targeting and optimizing these features in marketing or sales campaigns. Further research addressing class imbalance and exploring alternative models or algorithms could improve predictions, which will increase the model’s ability for businesses to utilize. 
+
+## Introduction
+
+The growth of online shopping or e-commerce has completely changed how people shop. Online shopping provides the convenience of exploring many different online stores effortlessly from their homes. This gives people more freedom over their time and choices. With this, retail e-commerce sales are estimated to exceed 4.1 trillion U.S. dollars worldwide in 2024 from roughly 2.7 billion online shoppers [@commerce2024ecommerce][@taheer2024online]. In an evergrowing consumerism society, it is important to understand consumers’ behaviours in addition to their intentions. This can allow businesses to optimize the online shopping experience and maximize revenue in such a massive industry. When shopping in person, a store employee may find it easy to determine a person’s purchasing intention through various social cues. However, while shopping online, companies and businesses find it much more difficult to decide on the intentions of their customers. Businesses need to find solutions from data on user interactions such as page clicks, time spent on pages, time of day or year, and much more. With the evergrowing increase in website traffic, businesses must distinguish between visitors with strong purchasing intentions and those who are simply browsing. 
+
+Machine learning is a powerful tool we can utilize to analyze and predict online shoppers purchasing intentions based on behavioural and interaction data. Using machine learning techniques, we can use algorithms and computation to analyze various features such as bounce rates, visitor type, time of year, and many others to identify patterns which can help predict purchasing intention. In this study, we aim to use a machine learning algorithm to predict online shoppers purchasing intentions. This will allow us to extract meaningful insights from user data. In such a lucrative field, determining purchasing intentions is vital to these companies and businesses for increasing revenue. This can help companies and businesses find optimal sales and marketing techniques, or personalize each customer experience on their website. 
+
+## Methods
+
+### Data
+
+The dataset used was sourced from the UCI Machine Learning Repository [@sakar2018uci] and can be found [here](https://archive.ics.uci.edu/ml/datasets/Online+Shoppers+Purchasing+Intention+Dataset). Each row in the dataset represents a web session on an e-commerce website, including details such as pages visited, time spent, and “Google Analytics” metrics for each page, such as “Bounce Rate”, “Exit Rate”, and “Page Value”. The “Special Day” variable highlights special events, while other web client attributes include OS, browser, region, traffic type, visitor type, and visit timing.
+
+Specifically, our target in the dataset is if the page vistor made a purchase or not (`Revenue`, true or false)
+
+The features that are in the dataset are:
+- The number of account management pages the visitor visited (`Administrative`)
+- The amount of time in seconds that the visitor spent on account management pages (`Administrative_Duration`)
+- The number of informational pages the visitor visited (`Informational`)
+- The amount of time in seconds that the visitor spent on informational pages (`Informational_Duration`)
+- The number of product related pages the visitor visited (`ProductRelated`)
+- The amount of time in seconds that the visitor spent on product related pages (`ProductRelated_Duration`)
+- The average bounce rate of the pages the visitor visited (`BounceRates`)
+- The average exit rate value of the pages that the visitor visited (`ExitRates`)
+- The average page value of the pages that the visitor visited (`PageValues`)
+- How close the time of visiting was to a special day, such as Mother's Day (`SpecialDay`)
+- The operating system of the visitor (`OperatingSystems`)
+- The browser of the visitor (`Browser`)
+- The region from which the visitor started the session from (`Region`)
+- How the visitor entered the website, such as a banner, SMS, etc. (`TrafficType`)
+- The visitor type, such as "new visitor", "returning visitor", etc. (`VisitorType`)
+- If the visitor visited the website on a weekend (`Weekend`)
+- The month in which the visitor visited the website (`Month`)
+
+Information about the target and features was sourced from Sakar et al.'s study [@sakar2018uci].
+
+For data validation, we verified our data using the information provided above. There are no null values in any columns, and the data types are as expected. We also performed range checks using common sense, such as ensuring that the maximum amount of time in seconds within a day does not exceed 24 x 60 x 60 = 86,400.
+
+While we identified some duplicated rows, we decided not to remove them. As mentioned before, the dataset represents web sessions on an e-commerce website from different users. It is plausible for observations to have identical values, as they likely represent similar simple browser client information and simple visitor actions, which can result in duplicate data being recorded within the same month. 
+
+When conducting data validation for correlation between feature-feature and feature-target we found 3 high correlations between feature-feature. This includes `Administrative`-`Administrative_Duration`, `Informational`-`Informational_Duration`, `ProductRelated`-`ProductRelated_Duration`. The correlations between these pairs were found to be higher than the threshold check of 0.8. For this reason, we have removed Administrative, Informational, and ProductRelated columns from the dataset.
+
+### Analysis
+
+The logistic regression algorithm was build for a classification model to predict whether the customers would make purchasing online in ecommerce sites based on the website visiting behaviours. All variables included in the data set were used to fit the model. Data was split with 70% into the training set and 30% into the test set. The hyperparameter was chosen using 5-fold cross validation with the accuracy score as the classification metric. All variables were standardized prior to model fitting. The Python programming language [@Python] and the following Python packages were used to perform the analysis: numpy [@numpy], Pandas [@pandas], altair [@altair], scikit-learn [@scikit-learn]. The package for data fetching from UCI Machine Learning Respoitory was ucimlrepo [@truong2024ucimlrepo]. The code used to perform the analysis and create this report can be found [here](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction) .
+
+## Results and Discussion
+
+To investigate the features in our dataset, we first visualized the correlation between each pair of features using a heatmap. From this, we can see that feautres are not too correlated with each other, and strong correlations only appear when a feature is compared to itself.
+
+We also plotted the distribution of each numeric feature using density plots and the distribution of each categorical feature using bar plots. These plots were coloured by the target (false: blue and true: orange). For the numeric features, we can see that the target class distributions overlap and are of similar shape, but we decided to keep these features in our model since they may be useful for prediction in ombination with other features. For the catagorical features, the target class dsitributions seem to be similar, but again we decided to keep these features in our model since they may be useful for prediction in ombination with other features. We also noticed that there is an imbalance in our dataset in which there are more observations with the target = false and less observations with the target = true. We did not account for this imbalance in our analysis (i.e. the model and scoring metric) since that would be out of the scope for this project, which relies on only DSCI 571 knowledge.
+
+
+![Figure 1. Distribution of numeric features for each target class.](../results/feature_density.png){#fig-feature_density width=65%}
+
+
+![Figure 2. Distribution of categorical features for each target class.](../results/feature_bar_plot.png){#fig-feature_bar_plot width=65%}
+
+
+![Figure 3. Correlation plot between all features in dataset](../results/correlation_heatmap.png){#fig-correlation_heatmap width=65%}
+
+
+
+```{python}
+# drop features with high feature - feature correlations
+train_df = train_df.drop(columns = ["Administrative", 
+                                    "Informational", 
+                                    "ProductRelated"])
+
+test_df = test_df.drop(columns = ["Administrative", 
+                                  "Informational", 
+                                  "ProductRelated"])
+```
+
+```{python}
+train_df_data_valid = Dataset(train_df, label="Revenue", cat_features=[])
+
+# the maximum threshold allowed
+threshold = 0.80
+
+# validate training data for anomalous correlations between target variable and features
+check_feature_target_corr = FeatureLabelCorrelation().add_condition_feature_pps_less_than(threshold)
+check_feature_terget_corr_result = check_feature_target_corr.run(dataset = train_df_data_valid)
+
+if not check_feature_terget_corr_result.passed_conditions():
+    raise ValueError(f"Feature-target correlation exceeds the maximum acceptable threshold of {threshold}.")
+
+# validate training data anomalous correlations between features
+check_feature_feature_corr = FeatureFeatureCorrelation().add_condition_max_number_of_pairs_above_threshold(threshold = threshold)
+check_feature_feature_corr_result = check_feature_feature_corr.run(dataset = train_df_data_valid)
+
+if not check_feature_feature_corr_result.passed_conditions():
+    raise ValueError(f"Feature-feature correlation exceeds the maximum acceptable threshold of {threshold}.")
+```
+
+```{python}
+# create baseline model to compare final model to
+dummy_classifier = DummyClassifier()
+dummy_classifier.fit(X_train, y_train)
+dummy_cv_scores = pd.DataFrame(
+    cross_validate(dummy_classifier, X_train, y_train, cv = 5, return_train_score = True))
+mean_dummy_validation_accuracy = dummy_cv_scores['test_score'].mean()
+mean_dummy_validation_accuracy
+```
+
+We chose to use a logistic regression model for our classification model. To find the model with the highest acuracy in predicting our target, we used 5-fold cross-validation to select our best value of the C hyperparameter. We found that the best C was 0.768.
+
+```{python}
+# lists of each type of feature
+numeric_cols = ['Administrative', 'Administrative_Duration',
+                'Informational', 'Informational_Duration',
+                'ProductRelated', 'ProductRelated_Duration',
+                'BounceRates', 'ExitRates',
+                'PageValues', 'SpecialDay']
+categorical_cols = ['Weekend', 'OperatingSystems',
+                    'Browser', 'Region',
+                    'TrafficType', 'VisitorType']
+ordinal_cols = ['Month']
+```
+
+```{python}
+# make preproccessor, note imputation is not needed since there are no null values in the data set
+month_levels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+preprocessor = make_column_transformer(
+    (StandardScaler(), numeric_cols),
+    (OneHotEncoder(sparse_output=False, handle_unknown='ignore'), categorical_cols),
+    (OrdinalEncoder(categories=[month_levels]), ordinal_cols)
+)
+```
+
+```{python}
+# make pipeline including preprocessor and logistic regression model
+log_reg_pipe = make_pipeline(
+    preprocessor, LogisticRegression(max_iter=2000, random_state=123)
+)
+```
+
+From cross-validation, we found that our best logistic regression model with C = 0.768 yielded an validation accuracy score of 88.6%, which is slightly better (3.7%) compared to the validation accuracy score of our dummy classifier using a most-frequent strategy (84.9%).
+
+```{python}
+# tune hyperparameter C of the logistic regression model
+param_grid = {
+    "logisticregression__C": loguniform(1e-3, 1e3),
+}
+
+random_search = RandomizedSearchCV(
+    log_reg_pipe,
+    param_grid,
+    n_iter=100,
+    verbose=1,
+    n_jobs=-1,
+    random_state=123,
+    return_train_score=True,
+)
+
+random_search.fit(X_train, y_train)
+
+print("Best hyperparameter value: ", random_search.best_params_)
+print("Best score: %0.3f" % (random_search.best_score_))
+```
+
+After testing our model using the testing data, we found that our best logistic regression model with C = 0.768 had a test accuracy score of 87.6%, which is again a bit better (4.1%) that the test accuracy score of our dummy classifier using a most-frequent strategy (83.5%).
+
+```{python}
+# score dummy and best logistic regression model on test set
+dummy_test_score = dummy_classifier.score(X_test, y_test)
+log_reg_test_score = random_search.score(X_test, y_test)
+
+
+print("Dummy classifier test score: %0.3f" % dummy_test_score)
+print("Best logistic regression model test score: %0.3f" % log_reg_test_score)
+```
+
+To find out how important each feature is considered by our model for predicting the target class, we investigated the model's weight of each feature. We found that the `ExitRates` and `PagesValues` features seem to be the most important for determining the target.
+
+```{python}
+# find weights of each feature
+best_estimator = random_search.best_estimator_
+feature_names = best_estimator['columntransformer'].get_feature_names_out() # get feature names
+weights = best_estimator["logisticregression"].coef_ # get feature coefficients
+
+feat_weights = pd.DataFrame(weights, columns = feature_names)
+feat_weights = feat_weights.T.reset_index()
+feat_weights = feat_weights.rename(columns={'index': 'feature', 0: "weight"})
+feat_weights['feature'] = feat_weights['feature'].str.split('__', expand = True)[1]
+```
+
+```{python}
+# average the weights of each overall feature
+
+feat_weights['overall_feature'] = feat_weights['feature'].str.split('_', expand = True)[0]
+
+# absolute value the weights so that positive and negative ones don't cancel eachother out
+feat_weights['absolute_value_weight'] = abs(feat_weights['weight'])
+
+absolute_feat_weights = pd.DataFrame(feat_weights.groupby('overall_feature'
+    ).mean(numeric_only=True
+    ).sort_values('absolute_value_weight', ascending = False
+    )['absolute_value_weight']).reset_index()
+
+
+alt.Chart(absolute_feat_weights).mark_bar().encode(
+    x = alt.X('absolute_value_weight').title('Absolute Value Weight'),
+    y = alt.Y('overall_feature').sort('x').title('Overall Feature')
+)
+```
+
+Figure 4. Model features and their associated absolute value weight.
+
+Our model achieves a high accuracy score of !!!!!!!87.6%, suggesting its potential usefulness in predicting whether a customer will purchase a product based on their behavioral and interaction data with a business's website. However, its performance is only marginally better than a model that always predicts a customer will not make a purchase (accuracy = !!!!!!!!83.5%).
+
+The analysis could be enhanced by addressing the imbalance in the target classes within our data and by using alternative scoring metrics. This approach might result in a better-performing model and a more robust evaluation. Additionally, exploring other classification models, such as SVM with RBF kernel and KNN, and comparing their performance to our logistic regression model could provide valuable insights.
+
+We also identified that the features `PageValue` (the average value of web pages visited by the visitor) and `ExitRate` (the average exit rate of web pages visited) were the most significant for predictions. These findings offer meaningful insights into how businesses can anticipate customer intentions and develop strategies to increase sales, such as enhancing `PageValue` and reducing `ExitRate` for potential customers. However, these insights may evolve if the model incorporates the class imbalance in the data.
+
+## References
+
+
+
