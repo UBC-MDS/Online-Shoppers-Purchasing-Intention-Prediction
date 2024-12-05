@@ -1,6 +1,6 @@
 services:
   jupyter-notebook:
-    image: stephanieta/dsci522-online-shopping-project:48c7361
+    image: stephanieta/dsci522-online-shopping-project:479a8ff
     ports:
       - "8888:8888"
     volumes:
