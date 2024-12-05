@@ -3,23 +3,29 @@
 # date: 2024-12-04
 #
 # This script gets the feature weights (as magnitude) from the logistic regression model
-# saves them in a table. It also visualizes the weights in a bar chart and
+# and saves them in a table. It also visualizes the weights in a bar chart and
 # saves the bar chart.
 #
-# Usage: python 08_get_feat_weights.py \
+# Usage: python scripts/08_get_feat_weights.py \
 # --logreg-model-from=results/models/logreg_classifier.pickle \
-# --scores-to=results/tables/model_scores.csv \
-# --figure-to=results/figures/fig4_feat_weights.png
+# --weights-to=results/tables/feat_weights.csv \
+# --figure-to=results/images/fig4_feat_weights.png
 
 import pandas as pd
 import pickle
 import altair as alt
+import click
 
+@click.command()
 @click.option('--logreg-model-from', type=str, help="Path to directory where the logistic regression model is")
 @click.option('--weights-to', type=str, help="Path to directory where the feature weights will be written to")
 @click.option('--figure-to', type=str, help="Path to directory where the figure of feature weights will be written to")
-def main(logreg_model_from, scores_to, scores_to, figure_to):
-    
+def main(logreg_model_from, weights_to, figure_to):
+    """
+    Gets the feature weights (as magnitude) from the logistic regression model
+    and saves them in a table. Also visualizes the weights in a bar chart and
+    saves the bar chart.
+    """
     # read in saved logistic regression model object
     with open(logreg_model_from, 'rb') as f:
         random_search = pickle.load(f)
@@ -44,12 +50,12 @@ def main(logreg_model_from, scores_to, scores_to, figure_to):
         )['absolute_value_weight']).reset_index()
 
     # save weights in csv
-    absolute_feat_weights.to_csv(scores_to)
+    absolute_feat_weights.to_csv(weights_to)
 
     # visualize the magnitude of the weights in a bar graph
     magnitude_bar_graph = alt.Chart(absolute_feat_weights).mark_bar().encode(
         x = alt.X('absolute_value_weight').title('Absolute Value Weight'),
-        y = alt.Y('overall_feature').sort('x').title('Overall Feature')
+        y = alt.Y('overall_feature').sort('x').title('Overall Feature'))
 
     # save figure as png
     magnitude_bar_graph.save(figure_to)
