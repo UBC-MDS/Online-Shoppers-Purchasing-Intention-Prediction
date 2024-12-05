@@ -1,3 +1,3 @@
-,Unnamed: 0,model,mean_validation_accuracy,test_accuracy
-0,0,Dummy Model,0.8494960081213042,
-1,1,Logistic Regression Model,0.8861077656281766,
+,Unnamed: 0.2,Unnamed: 0.1,Unnamed: 0,model,mean_validation_accuracy,test_accuracy
+0,0,0,0,Dummy Model,0.8494960081213042,0.8353609083536091
+1,1,1,1,Logistic Regression Model,0.8861077656281766,0.8756420654230873
