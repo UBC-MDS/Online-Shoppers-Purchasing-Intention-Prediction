@@ -1,0 +1,3 @@
+,model,mean_validation_accuracy,test_accuracy
+0,Dummy Model,0.8494960081213042,
+1,Logistic Regression Model,,
