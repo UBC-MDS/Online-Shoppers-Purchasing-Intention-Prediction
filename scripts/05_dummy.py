@@ -6,7 +6,7 @@
 # It also saves the validation accuracy of the baseline model
 #
 # Usage: python scripts/05_dummy.py \
-# --X-train-data=data/processed/X_train.csv \
+# --x-train-data=data/processed/X_train.csv \
 # --y-train-data=data/processed/y_train.csv \
 # --model-to=results/models/dummy_classifier.pickle \
 # --scores-to=results/tables/model_scores.csv
@@ -15,14 +15,20 @@ import pandas as pd
 from sklearn.model_selection import cross_validate
 from sklearn.dummy import DummyClassifier
 import pickle
+import click
 
-@click.option('--X-train-data', type=str, help="Path to X training data (features only)")
+@click.command()
+@click.option('--x-train-data', type=str, help="Path to X training data (features only)")
 @click.option('--y-train-data', type=str, help="Path to y training data (target only)")
 @click.option('--model-to', type=str, help="Path to directory where the model will be written to")
 @click.option('--scores-to', type=str, help="Path to directory where the score will be written to")
-def main(X_train_data, y_train_data, model_to, scores_to):
+def main(x_train_data, y_train_data, model_to, scores_to):
+    """
+    Creates and saves the baseline model to compare our final model to.
+    Also saves the validation accuracy of the baseline model.
+    """
     # read in data
-    X_train = pd.read_csv(X_train_data)
+    X_train = pd.read_csv(x_train_data)
     y_train = pd.read_csv(y_train_data)
     
     # create baseline model to compare final model to
