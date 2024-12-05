@@ -9,7 +9,7 @@
 # --X-train-data=data/processed/X_train.csv \
 # --y-train-data=data/processed/y_train.csv \
 # --model-to=results/models/dummy_classifier.pickle \
-# --scores-to=results/tables/model_scores.csv \
+# --scores-to=results/tables/model_scores.csv
 
 import pandas as pd
 from sklearn.model_selection import cross_validate
