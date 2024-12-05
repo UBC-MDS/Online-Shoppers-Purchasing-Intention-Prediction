@@ -28,17 +28,25 @@ with open('../results/models/logreg_classifier.pickle', 'rb') as f:
     logreg_classifier = pickle.load(f)
 with open('../results/models/dummy_classifier.pickle', 'rb') as f:
     dummy_classifier = pickle.load(f)
+modelscores_table = pd.read_csv("../results/tables/model_scores.csv")
+```
+```{python}
+best_C = round(logreg_classifier.best_params_['logisticregression__C'],3)
+logreg_cv_score = round(modelscores_table[modelscores_table['model'] == 'Logistic Regression Model']['mean_validation_accuracy'].values[0]*100,1)
+dummy_cv_score = round(modelscores_table[modelscores_table['model'] == 'Dummy Model']['mean_validation_accuracy'].values[0]*100,1)
+logreg_test_score = round(modelscores_table[modelscores_table['model'] == 'Logistic Regression Model']['test_accuracy'].values[0]*100,1)
+dummy_test_score = round(modelscores_table[modelscores_table['model'] == 'Dummy Model']['test_accuracy'].values[0]*100,1)
 ```
 
 ## Summary
 
-This study attempts to build a classification model using a logistic regression algorithm to predict whether an online shopper will make a purchase based on their website interaction behaviour. The final classifier model achieved an accuracy of 87.6% on an unseen test dataset. Compare this to a dummy classifier model that always predicts no purchase, with an accuracy of 83.5%. While the logistic regression model performed reasonably well, it did not account for the class imbalance in the dataset, where there purchase target class was significantly less than the no purchase target class. From our logistic regression model, we identified that features PageValue and ExitRate were most important when making predictions. This can suggest that these features are the most significant when determining whether a customer will purchase or not. This model can provide insight for businesses to increase revenue by targeting and optimizing these features in marketing or sales campaigns. Further research addressing class imbalance and exploring alternative models or algorithms could improve predictions, which will increase the model’s ability for businesses to utilize. 
+This study attempts to build a classification model using a logistic regression algorithm to predict whether an online shopper will make a purchase based on their website interaction behaviour. The final classifier model achieved an accuracy of `{python} logreg_test_score`% on an unseen test dataset. Compare this to a dummy classifier model that always predicts no purchase, with an accuracy of `{python} dummy_test_score`%. While the logistic regression model performed reasonably well, it did not account for the class imbalance in the dataset, where there purchase target class was significantly less than the no purchase target class. From our logistic regression model, we identified that features PageValue and ExitRate were most important when making predictions. This can suggest that these features are the most significant when determining whether a customer will purchase or not. This model can provide insight for businesses to increase revenue by targeting and optimizing these features in marketing or sales campaigns. Further research addressing class imbalance and exploring alternative models or algorithms could improve predictions, which will increase the model’s ability for businesses to utilize. 
 
 ## Introduction
 
 The growth of online shopping or e-commerce has completely changed how people shop. Online shopping provides the convenience of exploring many different online stores effortlessly from their homes. This gives people more freedom over their time and choices. With this, retail e-commerce sales are estimated to exceed 4.1 trillion U.S. dollars worldwide in 2024 from roughly 2.7 billion online shoppers [@commerce2024ecommerce][@taheer2024online]. In an evergrowing consumerism society, it is important to understand consumers’ behaviours in addition to their intentions. This can allow businesses to optimize the online shopping experience and maximize revenue in such a massive industry. When shopping in person, a store employee may find it easy to determine a person’s purchasing intention through various social cues. However, while shopping online, companies and businesses find it much more difficult to decide on the intentions of their customers. Businesses need to find solutions from data on user interactions such as page clicks, time spent on pages, time of day or year, and much more. With the evergrowing increase in website traffic, businesses must distinguish between visitors with strong purchasing intentions and those who are simply browsing. 
 
-Machine learning is a powerful tool we can utilize to analyze and predict online shoppers purchasing intentions based on behavioural and interaction data. Using machine learning techniques, we can use algorithms and computation to analyze various features such as bounce rates, visitor type, time of year, and many others to identify patterns which can help predict purchasing intention. In this study, we aim to use a machine learning algorithm to predict online shoppers purchasing intentions. This will allow us to extract meaningful insights from user data. In such a lucrative field, determining purchasing intentions is vital to these companies and businesses for increasing revenue. This can help companies and businesses find optimal sales and marketing techniques, or personalize each customer experience on their website. 
+Machine learning is a powerful tool we can utilize to analyze and predict online shoppers purchasing intentions based on behavioral and interaction data. Using machine learning techniques, we can use algorithms and computation to analyze various features such as bounce rates, visitor type, time of year, and many others to identify patterns which can help predict purchasing intention. In this study, we aim to use a machine learning algorithm to predict online shoppers purchasing intentions. This will allow us to extract meaningful insights from user data. In such a lucrative field, determining purchasing intentions is vital to these companies and businesses for increasing revenue. This can help companies and businesses find optimal sales and marketing techniques, or personalize each customer experience on their website. 
 
 ## Methods
 
@@ -46,7 +54,7 @@ Machine learning is a powerful tool we can utilize to analyze and predict online
 
 The dataset used was sourced from the UCI Machine Learning Repository [@sakar2018uci] and can be found [here](https://archive.ics.uci.edu/ml/datasets/Online+Shoppers+Purchasing+Intention+Dataset). Each row in the dataset represents a web session on an e-commerce website, including details such as pages visited, time spent, and “Google Analytics” metrics for each page, such as “Bounce Rate”, “Exit Rate”, and “Page Value”. The “Special Day” variable highlights special events, while other web client attributes include OS, browser, region, traffic type, visitor type, and visit timing.
 
-Specifically, our target in the dataset is if the page vistor made a purchase or not (`Revenue`, true or false)
+Specifically, our target in the dataset is if the page visitor made a purchase or not (`Revenue`, true or false)
 
 The features that are in the dataset are:</br>
 - The number of account management pages the visitor visited (`Administrative`)</br>
@@ -81,43 +89,53 @@ The logistic regression algorithm was build for a classification model to predic
 
 ## Results and Discussion
 
-To investigate the features in our dataset, we first visualized the correlation between each pair of features using a heatmap. From this, we can see that feautres are not too correlated with each other, and strong correlations only appear when a feature is compared to itself.
+To investigate the features in our dataset, we first visualized the correlation between each pair of features using a heatmap. From this, we can see that feautures are not too correlated with each other, and strong correlations only appear when a feature is compared to itself.
 
-We also plotted the distribution of each numeric feature using density plots and the distribution of each categorical feature using bar plots. These plots were coloured by the target (false: blue and true: orange). For the numeric features, we can see that the target class distributions overlap and are of similar shape, but we decided to keep these features in our model since they may be useful for prediction in ombination with other features. For the catagorical features, the target class dsitributions seem to be similar, but again we decided to keep these features in our model since they may be useful for prediction in ombination with other features. We also noticed that there is an imbalance in our dataset in which there are more observations with the target = false and less observations with the target = true. We did not account for this imbalance in our analysis (i.e. the model and scoring metric) since that would be out of the scope for this project, which relies on only DSCI 571 knowledge.
-
-
-![Distribution of numeric features for each target class.](../results/images/feature_density.png){#fig-feature_density width=65%}
+We also plotted the distribution of each numeric feature using density plots and the distribution of each categorical feature using bar plots. These plots were coloured by the target (false: blue and true: orange). For the numeric features, we can see that the target class distributions overlap and are of similar shape, but we decided to keep these features in our model since they may be useful for prediction in combination with other features. For the categorical features, the target class distributions seem to be similar, but again we decided to keep these features in our model since they may be useful for prediction in combination with other features. We also noticed that there is an imbalance in our dataset in which there are more observations with the target = false and less observations with the target = true. We did not account for this imbalance in our analysis (i.e. the model and scoring metric) since that would be out of the scope for this project, which relies on only DSCI 571 knowledge.
 
 
-![Distribution of categorical features for each target class.](../results/images/feature_bar_plot.png){#fig-feature_bar_plot width=65%}
+![Distribution of numeric features for each target class.](../results/images/feature_density.png){#fig-feature_density width=85%}
 
 
-![Correlation plot between all features in dataset](../results/images/correlation_heatmap.png){#fig-correlation_heatmap width=65%}
+![Distribution of categorical features for each target class.](../results/images/feature_bar_plot.png){#fig-feature_bar_plot width=85%}
 
 
+![Correlation plot between all features in dataset](../results/images/correlation_heatmap.png){#fig-correlation_heatmap width=85%}
 
-We chose to use a logistic regression model for our classification model. To find the model with the highest acuracy in predicting our target, we used 5-fold cross-validation to select our best value of the C hyperparameter. We found that the best C was 0.768.
 
-From cross-validation, we found that our best logistic regression model with C = 0.768 yielded an validation accuracy score of 88.6%, which is slightly better (3.7%) compared to the validation accuracy score of our dummy classifier using a most-frequent strategy (84.9%).
+We chose to use a logistic regression model for our classification model. To find the model with the highest accuracy in predicting our target, we used 5-fold cross-validation to select our best value of the C hyperparameter. We found that the best C was `{python} best_C`.
 
-After testing our model using the testing data, we found that our best logistic regression model with C = 0.768 had a test accuracy score of 87.6%, which is again a bit better (4.1%) that the test accuracy score of our dummy classifier using a most-frequent strategy (83.5%).
+From cross-validation , we found that our best logistic regression model with C = `{python} best_C` yielded an validation accuracy score of `{python} logreg_cv_score`%, which is slightly better (`{python} round(logreg_cv_score-dummy_cv_score,1)`%) compared to the validation accuracy score of our dummy classifier using a most-frequent strategy (`{python} dummy_cv_score`%).[@tbl-validation_scores]
 
 ```{python}
-#| label: tbl-dummy_bestmodel_scores
-#| tbl-cap: The comparison of scores between Dummy Classifier and Logistic Regression model with the best parameters.
+#| label: tbl-validation_scores
+#| tbl-cap: The comparison of validation scores between Dummy Classifier and Logistic Regression model.
 #| echo: false
 
-modelscores_table = pd.read_csv("../results/tables/model_scores.csv")
+cv_score_table = modelscores_table[['model', 'mean_validation_accuracy']]
+cv_score_table = cv_score_table.rename(columns={'model': 'Model', 'mean_validation_accuracy': 'Validation Score'})
+Markdown(cv_score_table.to_markdown(index = False))
+```
+
+After testing our model using the testing data, we found that our best logistic regression model with C = `{python} best_C` had a test accuracy score of `{python} logreg_test_score`%, which is again a bit better (`{python} round(logreg_test_score-dummy_test_score,1)`%) that the test accuracy score of our dummy classifier using a most-frequent strategy (`{python} dummy_test_score`%). [@tbl-test_scores]
+
+```{python}
+#| label: tbl-test_scores
+#| tbl-cap: The comparison of test scores between Dummy Classifier and Logistic Regression model with the best parameters.
+#| echo: false
+
+modelscores_table = modelscores_table[['model', 'test_accuracy']]
+modelscores_table = modelscores_table.rename(columns={'model': 'Model', 'test_accuracy': 'Test Score'})
 Markdown(modelscores_table.to_markdown(index = False))
 ```
 
 To find out how important each feature is considered by our model for predicting the target class, we investigated the model's weight of each feature in [@#fig-feature_bar_plot]. We found that the `ExitRates` and `PagesValues` features seem to be the most important for determining the target.
 
 
-![Model features and their associated absolute value weight.](../results/images/fig4_feat_weights.png){#fig-feature_bar_plot width=65%}
+![Model features and their associated absolute value weight.](../results/images/fig4_feat_weights.png){#fig-feature_bar_plot width=85%}
 
 
-Our model achieves a high accuracy score of 87.6%, suggesting its potential usefulness in predicting whether a customer will purchase a product based on their behavioral and interaction data with a business's website. However, its performance is only marginally better than a model that always predicts a customer will not make a purchase (accuracy = 83.5%).
+Our model achieves a high accuracy score of `{python} logreg_test_score`%, suggesting its potential usefulness in predicting whether a customer will purchase a product based on their behavioral and interaction data with a business's website. However, its performance is only marginally better than a model that always predicts a customer will not make a purchase (accuracy = `{python} dummy_test_score`%).
 
 The analysis could be enhanced by addressing the imbalance in the target classes within our data and by using alternative scoring metrics. This approach might result in a better-performing model and a more robust evaluation. Additionally, exploring other classification models, such as SVM with RBF kernel and KNN, and comparing their performance to our logistic regression model could provide valuable insights.
 
