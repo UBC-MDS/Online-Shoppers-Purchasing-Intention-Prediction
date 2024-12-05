@@ -85,13 +85,13 @@ When conducting data validation for correlation between feature-feature and feat
 
 ### Analysis
 
-The logistic regression algorithm was build for a classification model to predict whether the customers would make purchasing online in ecommerce sites based on the website visiting behaviours. All variables included in the data set were used to fit the model. Data was split with 70% into the training set and 30% into the test set. The hyperparameter was chosen using 5-fold cross validation with the accuracy score as the classification metric. All variables were standardized prior to model fitting. The Python programming language [@Python] and the following Python packages were used to perform the analysis: numpy [@numpy], Pandas [@pandas], altair [@altair], scikit-learn [@scikit-learn]. The package for data fetching from UCI Machine Learning Respoitory was ucimlrepo [@truong2024ucimlrepo]. The code used to perform the analysis and create this report can be found [here](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction) .
+The logistic regression algorithm was build for a classification model to predict whether the customers would make purchasing online in ecommerce sites based on the website visiting behaviours. All variables included in the data set were used to fit the model. Data was split with 70% into the training set and 30% into the test set. The hyperparameter was chosen using 5-fold cross validation with the accuracy score as the classification metric. All variables were standardized prior to model fitting. The Python programming language [@Python] and the following Python packages were used to perform the analysis: numpy [@numpy], Pandas [@pandas], altair [@altair], scikit-learn [@scikit-learn]. The package for data fetching from UCI Machine Learning Respoitory was ucimlrepo [@truong2024ucimlrepo]. The code used to perform the analysis and create this report can be found [here](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction).
 
 ## Results and Discussion
 
-To investigate the features in our dataset, we first visualized the correlation between each pair of features using a heatmap. From this, we can see that feautures are not too correlated with each other, and strong correlations only appear when a feature is compared to itself.
+To investigate the features in our dataset, we first visualized the correlation between each pair of features using a heatmap (@fig-correlation_heatmap). From this, we can see that feautures are not too correlated with each other, and strong correlations only appear when a feature is compared to itself.
 
-We also plotted the distribution of each numeric feature using density plots and the distribution of each categorical feature using bar plots. These plots were coloured by the target (false: blue and true: orange). For the numeric features, we can see that the target class distributions overlap and are of similar shape, but we decided to keep these features in our model since they may be useful for prediction in combination with other features. For the categorical features, the target class distributions seem to be similar, but again we decided to keep these features in our model since they may be useful for prediction in combination with other features. We also noticed that there is an imbalance in our dataset in which there are more observations with the target = false and less observations with the target = true. We did not account for this imbalance in our analysis (i.e. the model and scoring metric) since that would be out of the scope for this project, which relies on only DSCI 571 knowledge.
+We also plotted the distribution of each numeric feature using density plots (@fig-feature_density) and the distribution of each categorical feature using bar plots (@fig-feature_bar_plot). These plots were coloured by the target (false: blue and true: orange). For the numeric features, we can see that the target class distributions overlap and are of similar shape, but we decided to keep these features in our model since they may be useful for prediction in combination with other features. For the categorical features, the target class distributions seem to be similar, but again we decided to keep these features in our model since they may be useful for prediction in combination with other features. We also noticed that there is an imbalance in our dataset in which there are more observations with the target = false and less observations with the target = true. We did not account for this imbalance in our analysis (i.e. the model and scoring metric) since that would be out of the scope for this project, which relies on only DSCI 571 knowledge.
 
 
 ![Distribution of numeric features for each target class.](../results/images/feature_density.png){#fig-feature_density width=85%}
@@ -105,7 +105,7 @@ We also plotted the distribution of each numeric feature using density plots and
 
 We chose to use a logistic regression model for our classification model. To find the model with the highest accuracy in predicting our target, we used 5-fold cross-validation to select our best value of the C hyperparameter. We found that the best C was `{python} best_C`.
 
-From cross-validation , we found that our best logistic regression model with C = `{python} best_C` yielded an validation accuracy score of `{python} logreg_cv_score`%, which is slightly better (`{python} round(logreg_cv_score-dummy_cv_score,1)`%) compared to the validation accuracy score of our dummy classifier using a most-frequent strategy (`{python} dummy_cv_score`%).[@tbl-validation_scores]
+From cross-validation, we found that our best logistic regression model with C = `{python} best_C` yielded an validation accuracy score of `{python} logreg_cv_score`%, which is slightly better (`{python} round(logreg_cv_score-dummy_cv_score,1)`%) compared to the validation accuracy score of our dummy classifier using a most-frequent strategy (`{python} dummy_cv_score`%), as seen in [@tbl-validation_scores].
 
 ```{python}
 #| label: tbl-validation_scores
@@ -117,7 +117,7 @@ cv_score_table = cv_score_table.rename(columns={'model': 'Model', 'mean_validati
 Markdown(cv_score_table.to_markdown(index = False))
 ```
 
-After testing our model using the testing data, we found that our best logistic regression model with C = `{python} best_C` had a test accuracy score of `{python} logreg_test_score`%, which is again a bit better (`{python} round(logreg_test_score-dummy_test_score,1)`%) that the test accuracy score of our dummy classifier using a most-frequent strategy (`{python} dummy_test_score`%). [@tbl-test_scores]
+After testing our model using the testing data, we found that our best logistic regression model with C = `{python} best_C` had a test accuracy score of `{python} logreg_test_score`%, which is again a bit better (`{python} round(logreg_test_score-dummy_test_score,1)`%) that the test accuracy score of our dummy classifier using a most-frequent strategy (`{python} dummy_test_score`%), as seen in [@tbl-test_scores].
 
 ```{python}
 #| label: tbl-test_scores
@@ -129,7 +129,7 @@ modelscores_table = modelscores_table.rename(columns={'model': 'Model', 'test_ac
 Markdown(modelscores_table.to_markdown(index = False))
 ```
 
-To find out how important each feature is considered by our model for predicting the target class, we investigated the model's weight of each feature in [@#fig-feature_bar_plot]. We found that the `ExitRates` and `PagesValues` features seem to be the most important for determining the target.
+To find out how important each feature is considered by our model for predicting the target class, we investigated the model's weight of each feature in [@fig-feature_bar_plot]. We found that the `ExitRates` and `PagesValues` features seem to be the most important for determining the target.
 
 
 ![Model features and their associated absolute value weight.](../results/images/fig4_feat_weights.png){#fig-feature_bar_plot width=85%}
