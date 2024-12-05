@@ -104,28 +104,6 @@ We chose to use a logistic regression model for our classification model. To fin
 
 From cross-validation, we found that our best logistic regression model with C = 0.768 yielded an validation accuracy score of 88.6%, which is slightly better (3.7%) compared to the validation accuracy score of our dummy classifier using a most-frequent strategy (84.9%).
 
-```{python}
-# tune hyperparameter C of the logistic regression model
-param_grid = {
-    "logisticregression__C": loguniform(1e-3, 1e3),
-}
-
-random_search = RandomizedSearchCV(
-    log_reg_pipe,
-    param_grid,
-    n_iter=100,
-    verbose=1,
-    n_jobs=-1,
-    random_state=123,
-    return_train_score=True,
-)
-
-random_search.fit(X_train, y_train)
-
-print("Best hyperparameter value: ", random_search.best_params_)
-print("Best score: %0.3f" % (random_search.best_score_))
-```
-
 After testing our model using the testing data, we found that our best logistic regression model with C = 0.768 had a test accuracy score of 87.6%, which is again a bit better (4.1%) that the test accuracy score of our dummy classifier using a most-frequent strategy (83.5%).
 
 ```{python}
@@ -137,7 +115,7 @@ modelscores_table = pd.read_csv("../results/tables/model_scores.csv")
 Markdown(modelscores_table.to_markdown(index = False))
 ```
 
-To find out how important each feature is considered by our model for predicting the target class, we investigated the model's weight of each feature. We found that the `ExitRates` and `PagesValues` features seem to be the most important for determining the target.
+To find out how important each feature is considered by our model for predicting the target class, we investigated the model's weight of each feature in [@#fig-feature_bar_plot]. We found that the `ExitRates` and `PagesValues` features seem to be the most important for determining the target.
 
 
 ![Model features and their associated absolute value weight.](../results/images/fig4_feat_weights.png){#fig-feature_bar_plot width=65%}
