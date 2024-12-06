@@ -15,9 +15,48 @@ To replicate our analysis:
 1. Clone this GitHub repository to your local machine and navigate to the project root.
 2. Launch the virtual container by running the command `docker compose up` in terminal.
 3. To open JupyterLab, copy and paste the URL in your browser that appears in terminal that starts with `http://127.0.0.1:8888/lab?token=`.
-4. In JupyterLab, open our report `src/online_shoppers_purchasing_intention_prediction.ipynb`.
-5. Run the report from top to bottom in the JupyterLab web application:
-    - Under the `Kernel` tab, click on `Restart Kernel and Run All Cells...`
+4. Run the following commands in terminal:
+```
+python scripts/01_extract_data.py --write_to=data/raw/
+
+python scripts/02_split_data.py --raw_data=data/raw/raw_data.csv --data_to=data/processed/
+
+python scripts/03_eda.py --data_from=data/processed/train_df.csv --plot_to=results/images/
+
+python scripts/04_preprocess_and_validate.py \
+    --train-data=data/processed/train_df.csv \
+    --test-data=data/processed/test_df.csv \
+    --x-train-data=data/processed/X_train.csv \
+    --x-test-data=data/processed/X_test.csv
+
+python scripts/05_dummy.py \
+    --x-train-data=data/processed/X_train.csv \
+    --y-train-data=data/processed/y_train.csv \
+    --model-to=results/models/dummy_classifier.pickle \
+    --scores-to=results/tables/model_scores.csv
+
+python scripts/06_tune_and_train.py \
+    --x-train-data=data/processed/X_train.csv \
+    --y-train-data=data/processed/y_train.csv \
+    --model-to=results/models/logreg_classifier.pickle \
+    --scores-to=results/tables/model_scores.csv
+
+python scripts/07_score.py \
+    --dummy-model-from=results/models/dummy_classifier.pickle \
+    --logreg-model-from=results/models/logreg_classifier.pickle \
+    --scores-to=results/tables/model_scores.csv \
+    --x-test-data=data/processed/X_test.csv \
+    --y-test-data=data/processed/y_test.csv
+
+python scripts/08_get_feat_weights.py \
+    --logreg-model-from=results/models/logreg_classifier.pickle \
+    --weights-to=results/tables/feat_weights.csv \
+    --figure-to=results/images/fig4_feat_weights.png
+
+quarto render reports/online_shoppers_purchasing_intention_prediction.qmd
+
+cp reports/online_shoppers_purchasing_intention_prediction.html docs/index.html           
+```
 
 To exit and clean up the container:
 1. `Ctrl` + `C` in terminal where you launched the container.
