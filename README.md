@@ -54,6 +54,8 @@ python scripts/08_get_feat_weights.py \
     --figure-to=results/images/fig4_feat_weights.png
 
 quarto render reports/online_shoppers_purchasing_intention_prediction.qmd
+
+cp reports/online_shoppers_purchasing_intention_prediction.html docs/index.html           
 ```
 
 To exit and clean up the container:
