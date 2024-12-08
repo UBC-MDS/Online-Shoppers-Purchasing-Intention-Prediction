@@ -1,6 +1,15 @@
 # eda.py
-# Author: Julian Daduica, Stephanie Ta, WaiMing Wong
+# Author: Julian Daduica
 # Date: 2024-12-03
+
+
+# This script performs exploratory data analysis (EDA) on the training dataset, generates a description table, and
+# visualizations. Then saves them as a CSV and PNG files to the inputted directory.
+#
+# Usage: python scripts/03_eda.py \
+# --data_from=data/processed/train_df.csv \
+# --plot_to=results/images/ \
+# --tables_to=results/tables/
 
 
 import click
@@ -12,16 +21,38 @@ import pandas as pd
 @click.command()
 @click.option('--data_from', type = str, help = "Path to processed training data")
 @click.option('--plot_to', type = str, help = "Path to directory where the plot will be written to")
-def main(data_from, plot_to):
+@click.option('--tables_to', type = str, help = "Path to directory where the tables will be written to")
+
+def main(data_from, tables_to, plot_to):
     """
-    add description
+    Performs exploratory data analysis (EDA) on the training dataset, generates visualizations, and saves them as
+    image files.
+    
+    ----------
+    data_from : str
+        The file path to the processed training data CSV file.
+
+    plot_to : str
+        The directory path where the visualization plots will be saved.
+
+    tables_to : str
+        The directory path where the tables will be saved.
+
+    Returns:
+    --------
+    None
     """
+
+
+    
     train_df = pd.read_csv(data_from)
 
+    # describe dataset table and save to tables results folder
+    describe_table = train_df.describe()
+    describe_file_path = os.path.join(tables_to, "train_df_describe.csv")
+    describe_table.to_csv(describe_file_path)
 
-    #train_df.describe()
-    #train_df.info()
-
+        
     # create feature density plot
     aly.alt.data_transformers.enable('vegafusion')
 
