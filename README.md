@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: sentence
----
-
 # Online Shoppers Purchasing Intention Prediction
 
 Authors: Julian Daduica @jdaduica, Stephanie Ta @Stephanie-Ta, and Wai Ming Wong @waiming
@@ -28,14 +22,11 @@ The final report can be found [here](https://ubc-mds.github.io/Online-Shoppers-P
 We are using a Docker virtual container so that our computational environment is reproducible.
 Please ensure that Docker Desktop is running while replicating our analysis if you are using Windows or Mac.
 
-To replicate our analysis: 1.
-Clone this GitHub repository to your local machine and navigate to the project root.
-2.
-Launch the virtual container by running the command `docker compose up` in terminal.
-3.
-To open JupyterLab, copy and paste the URL in your browser that appears in terminal that starts with `http://127.0.0.1:8888/lab?token=`.
-4.
-Run the following commands in terminal:
+To replicate our analysis:
+1. Clone this GitHub repository to your local machine and navigate to the project root.
+2. Launch the virtual container by running the command `docker compose up` in terminal.
+3. To open JupyterLab, copy and paste the URL in your browser that appears in terminal that starts with `http://127.0.0.1:8888/lab?token=`.
+4. Run the following commands in terminal:
 
 ```         
 python scripts/01_extract_data.py --write_to=data/raw/
@@ -80,10 +71,9 @@ python scripts/08_get_feat_weights.py \
 quarto render reports/online_shoppers_purchasing_intention_prediction.qmd
 ```
 
-To exit and clean up the container: 1.
-`Ctrl` + `C` in terminal where you launched the container.
-2.
-Run the command `docker compose rm` in terminal.
+To exit and clean up the container:
+1. `Ctrl` + `C` in terminal where you launched the container.
+2. Run the command `docker compose rm` in terminal.
 
 # Dependencies
 
