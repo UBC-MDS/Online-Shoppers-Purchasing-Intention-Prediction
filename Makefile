@@ -10,13 +10,13 @@
 
 .PHONY : all \
 data \
+models \
 tables \
 images \
-models \
 clean-data \
+clean-models \
 clean-tables \
 clean-images \
-clean-models \
 clean-report \
 clean
 
@@ -75,6 +75,24 @@ data/processed/X_test.csv : scripts/02_split_data.py scripts/04_preprocess_and_v
 
 data/processed/y_test.csv : scripts/02_split_data.py data/raw/raw_data.csv
 	python scripts/02_split_data.py --raw_data=data/raw/raw_data.csv --data_to=data/processed/
+
+# models
+models : results/models/dummy_classifier.pickle \
+results/models/logreg_classifier.pickle
+
+results/models/dummy_classifier.pickle : scripts/05_dummy.py data/processed/X_train.csv data/processed/y_train.csv
+	python scripts/05_dummy.py \
+		--x-train-data=data/processed/X_train.csv \
+		--y-train-data=data/processed/y_train.csv \
+		--model-to=results/models/dummy_classifier.pickle \
+		--scores-to=results/tables/model_scores.csv
+
+results/models/logreg_classifier.pickle : scripts/06_tune_and_train.py data/processed/X_train.csv data/processed/y_train.csv
+	python scripts/06_tune_and_train.py \
+		--x-train-data=data/processed/X_train.csv \
+		--y-train-data=data/processed/y_train.csv \
+		--model-to=results/models/logreg_classifier.pickle \
+		--scores-to=results/tables/model_scores.csv
 
 # tables
 tables : results/tables/train_df_describe.csv \
@@ -142,24 +160,6 @@ results/images/fig4_feat_weights.png : scripts/08_get_feat_weights.py results/mo
 		--weights-to=results/tables/feat_weights.csv \
 		--figure-to=results/images/fig4_feat_weights.png
 
-# models
-models : results/models/dummy_classifier.pickle \
-results/models/logreg_classifier.pickle
-
-results/models/dummy_classifier.pickle : scripts/05_dummy.py data/processed/X_train.csv data/processed/y_train.csv
-	python scripts/05_dummy.py \
-		--x-train-data=data/processed/X_train.csv \
-		--y-train-data=data/processed/y_train.csv \
-		--model-to=results/models/dummy_classifier.pickle \
-		--scores-to=results/tables/model_scores.csv
-
-results/models/logreg_classifier.pickle : scripts/06_tune_and_train.py data/processed/X_train.csv data/processed/y_train.csv
-	python scripts/06_tune_and_train.py \
-		--x-train-data=data/processed/X_train.csv \
-		--y-train-data=data/processed/y_train.csv \
-		--model-to=results/models/logreg_classifier.pickle \
-		--scores-to=results/tables/model_scores.csv
-
 # render report
 reports/online_shoppers_purchasing_intention_prediction.pdf reports/online_shoppers_purchasing_intention_prediction.html : reports/online_shoppers_purchasing_intention_prediction.qmd
 	quarto render reports/online_shoppers_purchasing_intention_prediction.qmd
@@ -174,6 +174,10 @@ clean-data :
 		data/processed/X_test.csv \
 		data/processed/y_test.csv
 
+clean-models :
+	rm -f results/models/dummy_classifier.pickle \
+		results/models/logreg_classifier.pickle
+
 clean-tables :
 	rm -f results/tables/train_df_describe.csv \
 		results/tables/model_scores.csv \
@@ -184,10 +188,6 @@ clean-images :
 		results/images/feature_bar_plot.png \
 		results/images/correlation_heatmap.png \
 		results/images/fig4_feat_weights.png
-
-clean-models :
-	rm -f results/models/dummy_classifier.pickle \
-		results/models/logreg_classifier.pickle
 
 clean-report :
 	rm -f reports/online_shoppers_purchasing_intention_prediction.pdf \
