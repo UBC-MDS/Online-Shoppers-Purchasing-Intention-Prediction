@@ -16,6 +16,9 @@ import os
 import requests
 import pandas as pd
 import pandera as pa
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from src.validating_data import validating_data
 
 
 
@@ -57,32 +60,7 @@ def main(write_to):
     assert os.path.isfile(file_path), f"File {file_path} was not created."
 
     # validate data
-    schema = pa.DataFrameSchema(
-        {"Administrative": pa.Column(int, nullable=False),
-         "Administrative_Duration": pa.Column(float, pa.Check.between(0, 86400), nullable=False),
-         "Informational": pa.Column(int, nullable=False),
-         "Informational_Duration": pa.Column(float, pa.Check.between(0, 86400), nullable=False),
-         "ProductRelated": pa.Column(int, nullable=False),
-         "ProductRelated_Duration": pa.Column(float, pa.Check.between(0, 86400), nullable=False),
-         "BounceRates": pa.Column(float, pa.Check.between(0, 1), nullable=False),
-         "ExitRates": pa.Column(float, pa.Check.between(0, 1), nullable=False),
-         "PageValues": pa.Column(float, nullable=False),
-         "SpecialDay": pa.Column(float, pa.Check.between(0, 1), nullable=False),
-         "Month": pa.Column(str, pa.Check.isin(["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]), nullable=False),
-         "OperatingSystems": pa.Column(int, nullable=False),
-         "Browser": pa.Column(int, nullable=False),
-         "Region": pa.Column(int, nullable=False),
-         "TrafficType": pa.Column(int, nullable=False), 
-         "VisitorType": pa.Column(str, pa.Check.isin(["New_Visitor", "Returning_Visitor", "Other"]), nullable=False),
-         "Weekend": pa.Column(bool, nullable=False),
-         "Revenue": pa.Column(bool, nullable=False),
-        },
-    checks=[
-        pa.Check(lambda dfpa: ~(dfpa.isna().all(axis=1)).any(), error="Empty rows found.")
-    ]
-)
-
-    schema.validate(df, lazy=True)
+    validating_data(df)
 
 
 if __name__ == '__main__':
