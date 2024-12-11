@@ -14,7 +14,7 @@ dependencies:
   - scipy==1.14.1
   - ucimlrepo==0.0.7
   - vegafusion==1.6.9
-  - vl-convert-python[version'>=1.6.0']
+  - vl-convert-python==1.7.0
   - nb_conda_kernels==2.5.1
   - quarto=1.5.57
   - click=8.1.7
@@ -22,5 +22,5 @@ dependencies:
   - make=4.4.1
   - pytest=8.3.4
   - pip:
-    - altair_ally>=0.1.1
+    - altair_ally==0.1.1
     - deepchecks==0.18.1
