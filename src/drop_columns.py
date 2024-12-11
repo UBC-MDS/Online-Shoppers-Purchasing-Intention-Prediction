@@ -18,6 +18,8 @@ def drop_columns(list_of_dataframes, list_of_columns):
         If list_of_columns is not a list of strings.
     KeyError:
         If any element of list_of_columns is not a column in any element of list_of_dataframes.
+    Warning:
+        If the list_of_columns is an empty list
 
     Returns
     -------
@@ -53,3 +55,11 @@ def drop_columns(list_of_dataframes, list_of_columns):
     2    10             14
     3    11             15
     """
+    # check if list_of_dataframes is a list of pandas dataframes
+    
+    # check if list_of_columns is empty (early return with unchanged input dfs)
+    # else check if it is a list of strings
+
+    # check if any element of list_of_columns is not a column in any element of list_of_dataframes
+    
+    return 0
