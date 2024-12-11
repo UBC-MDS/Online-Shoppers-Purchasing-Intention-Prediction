@@ -3,6 +3,10 @@ from src.drop_columns import drop_columns
 
 # tests
 
+# expected cases
+
+# edge cases
+# return empty dataframe(s) when all columns are dropped
 
 
 # test for raising a type error when list_of_dataframes is not a list of pandas dataframes
