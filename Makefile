@@ -33,7 +33,8 @@ data/processed/test_df.csv \
 data/processed/X_train.csv \
 data/processed/y_train.csv \
 data/processed/X_test.csv \
-data/processed/y_test.csv
+data/processed/y_test.csv \
+data/raw/train_df.csv
 
 data/raw/raw_data.csv : scripts/01_extract_data.py
 	python scripts/01_extract_data.py --write_to=data/raw/
@@ -76,6 +77,9 @@ data/processed/X_test.csv : scripts/02_split_data.py scripts/04_preprocess_and_v
 data/processed/y_test.csv : scripts/02_split_data.py data/raw/raw_data.csv
 	python scripts/02_split_data.py --raw_data=data/raw/raw_data.csv --data_to=data/processed/
 
+data/raw/train_df.csv : scripts/02_split_data.py data/raw/raw_data.csv
+	python scripts/02_split_data.py --raw_data=data/raw/raw_data.csv --data_to=data/raw/
+
 # models
 models : results/models/dummy_classifier.pickle \
 results/models/logreg_classifier.pickle
@@ -99,9 +103,9 @@ tables : results/tables/train_df_describe.csv \
 results/tables/model_scores.csv \
 results/tables/feat_weights.csv
 
-results/tables/train_df_describe.csv : scripts/03_eda.py data/processed/train_df.csv
+results/tables/train_df_describe.csv : scripts/03_eda.py data/raw/train_df.csv
 	python scripts/03_eda.py \
-		--data_from=data/processed/train_df.csv \
+		--data_from=data/raw/train_df.csv \
 		--plot_to=results/images/ \
 		--tables_to=results/tables/
 
@@ -136,21 +140,21 @@ results/images/feature_bar_plot.png \
 results/images/correlation_heatmap.png \
 results/images/fig4_feat_weights.png
 
-results/images/feature_density.png : scripts/03_eda.py data/processed/train_df.csv
+results/images/feature_density.png : scripts/03_eda.py data/raw/train_df.csv
 	python scripts/03_eda.py \
-		--data_from=data/processed/train_df.csv \
+		--data_from=data/raw/train_df.csv \
 		--plot_to=results/images/ \
 		--tables_to=results/tables/
 
-results/images/feature_bar_plot.png : scripts/03_eda.py data/processed/train_df.csv
+results/images/feature_bar_plot.png : scripts/03_eda.py data/raw/train_df.csv
 	python scripts/03_eda.py \
-		--data_from=data/processed/train_df.csv \
+		--data_from=data/raw/train_df.csv \
 		--plot_to=results/images/ \
 		--tables_to=results/tables/
 
-results/images/correlation_heatmap.png : scripts/03_eda.py data/processed/train_df.csv
+results/images/correlation_heatmap.png : scripts/03_eda.py data/raw/train_df.csv
 	python scripts/03_eda.py \
-		--data_from=data/processed/train_df.csv \
+		--data_from=data/raw/train_df.csv \
 		--plot_to=results/images/ \
 		--tables_to=results/tables/
 
@@ -166,7 +170,7 @@ reports/online_shoppers_purchasing_intention_prediction.pdf reports/online_shopp
 
 # clean outputs
 clean-data :
-	rm -f raw_data.csv \
+	rm -f data/raw/raw_data.csv \
 		data/processed/train_df.csv \
 		data/processed/test_df.csv \
 		data/processed/X_train.csv \
