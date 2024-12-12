@@ -9,13 +9,16 @@
 # --raw_data=data/raw/raw_data.csv \
 # --data_to=data/processed/
 
-
+import sys
 import click
 import os
 import numpy as np
 import pandas as pd
 import pickle
 from sklearn.model_selection import train_test_split
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from src.create_X_and_y_splits_and_save import create_X_and_y_splits_and_save
+
 
 
 
@@ -48,17 +51,7 @@ def main(raw_data, data_to):
     train_df.to_csv(os.path.join(data_to, "train_df.csv"), index= False)
     test_df.to_csv(os.path.join(data_to, "test_df.csv"), index= False)
 
-
-    X_train = train_df.drop(columns=["Revenue"])
-    X_test = test_df.drop(columns=["Revenue"])
-    y_train = train_df["Revenue"]
-    y_test = test_df["Revenue"]
-
-    X_train.to_csv(os.path.join(data_to, "X_train.csv"), index= False)
-    y_train.to_csv(os.path.join(data_to, "y_train.csv"), index= False)
-    X_test.to_csv(os.path.join(data_to, "X_test.csv"), index= False)
-    y_test.to_csv(os.path.join(data_to, "y_test.csv"), index= False)
-    
+    create_X_and_y_splits_and_save(train_df, test_df, 'Revenue', data_to)
 
     # validate that the training and testing sets were saved as csv files
     train_csv_path = os.path.join(data_to, "train_df.csv")
