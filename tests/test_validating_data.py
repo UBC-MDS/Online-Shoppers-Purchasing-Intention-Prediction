@@ -73,10 +73,10 @@ def test_empty_dataframe():
 
 # Test DataFrame with missing required columns.
 def test_missing_columns():
-    with pytest.raises(pa_errors.SchemaError):
+    with pytest.raises(pa_errors.SchemaErrors, match="COLUMN_NOT_IN_DATAFRAME"):
         validating_data(missing_columns_data)
 
 # Test DataFrame with invalid categorical values.
 def test_invalid_categorical_values():
-    with pytest.raises(pa_errors.SchemaError):
+    with pytest.raises(pa_errors.SchemaErrors, match="DATAFRAME_CHECK"):
         validating_data(invalid_categorical_values)
