@@ -3,6 +3,7 @@ import os
 import numpy as np
 import pandas as pd
 import pandera as pa
+import pandera.errors as pa_errors
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.validating_data import validating_data
