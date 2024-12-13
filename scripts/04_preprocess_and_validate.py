@@ -17,6 +17,10 @@ import pandas as pd
 from deepchecks.tabular.checks import FeatureLabelCorrelation, FeatureFeatureCorrelation
 from deepchecks.tabular import Dataset
 import click
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from src.drop_columns import drop_columns
 
 @click.command()
 @click.option('--train-data', type=str, help="Path to training data")
@@ -37,21 +41,9 @@ def main(train_data, test_data, x_train_data, x_test_data):
     X_test = pd.read_csv(x_test_data)
     
     # drop features with high feature - feature correlations
-    train_df = train_df.drop(columns = ["Administrative", 
-                                        "Informational", 
-                                        "ProductRelated"])
-    
-    test_df = test_df.drop(columns = ["Administrative", 
-                                      "Informational", 
-                                      "ProductRelated"])
+    columns_to_drop = ["Administrative", "Informational", "ProductRelated"]
 
-    X_train = X_train.drop(columns = ["Administrative", 
-                                      "Informational", 
-                                      "ProductRelated"])
-    
-    X_test = X_test.drop(columns = ["Administrative", 
-                                      "Informational", 
-                                      "ProductRelated"])
+    train_df, test_df, X_train, X_test = drop_columns([train_df, test_df, X_train, X_test], columns_to_drop)
     
     # update saved data 
     train_df.to_csv(train_data)
