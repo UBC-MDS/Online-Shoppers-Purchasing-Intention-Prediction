@@ -1,4 +1,5 @@
 import pandas as pd
+import warnings
 
 def drop_columns(list_of_dataframes, list_of_columns):
     """
@@ -11,6 +12,11 @@ def drop_columns(list_of_dataframes, list_of_columns):
     list_of_columns : list of str
         A list of column names to be dropped from the dataframes.
 
+    Warnings
+    --------
+    UserWarning:
+        If `list_of_columns` is an empty list. An unchanged list_of_dataframes will be returned.
+
     Raises
     ------
     TypeError:
@@ -18,8 +24,6 @@ def drop_columns(list_of_dataframes, list_of_columns):
         If list_of_columns is not a list of strings.
     KeyError:
         If any element of list_of_columns is not a column in any element of list_of_dataframes.
-    Warning:
-        If the list_of_columns is an empty list
 
     Returns
     -------
@@ -56,10 +60,27 @@ def drop_columns(list_of_dataframes, list_of_columns):
     3    11             15
     """
     # check if list_of_dataframes is a list of pandas dataframes
-    
+    if not isinstance(list_of_dataframes, list) or not all(isinstance(df, pd.DataFrame) for df in list_of_dataframes):
+        raise TypeError("list_of_dataframes must be a list of pandas DataFrames.")
+
     # check if list_of_columns is empty (early return with unchanged input dfs)
-    # else check if it is a list of strings
+    if len(list_of_columns) == 0:
+        warnings.warn("list_of_columns is an empty list. Unchanged list_of_dataframes returned.")
+        return list_of_dataframes
+    
+    # check if list_of_columns is a list of strings
+    if not isinstance(list_of_columns, list) or not all(isinstance(col, str) for col in list_of_columns):
+        raise TypeError("list_of_columns must be a list of strings.")
 
     # check if any element of list_of_columns is not a column in any element of list_of_dataframes
-    
-    return 0
+    for i, dataframe in enumerate(list_of_dataframes):
+        for column in list_of_columns:
+            if column not in dataframe.columns.to_list():
+                raise KeyError(f"DataFrame at index {i} of list_of_dataframes does not have a column named '{column}'.")
+
+    # drop columns if they exist in each dataframe of list_of_dataframes
+    list_dataframes_without_cols = []
+    for dataframe in list_of_dataframes:
+        dataframe_without_col = dataframe.drop(columns=list_of_columns)
+        list_dataframes_without_cols.append(dataframe_without_col)
+    return list_dataframes_without_cols
