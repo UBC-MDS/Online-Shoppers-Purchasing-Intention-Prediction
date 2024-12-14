@@ -37,3 +37,37 @@ You can also view the issue for tracking all of the below changes [here](https:/
 **Commit**: [e163fb5](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/commit/e163fb52e0397b5fb38abe23c705d0967ff75bd7)  
 **File updated**: `‎reports/online_shoppers_purchasing_intention_prediction.qmd` (lines 92, 94, 108, 120, and 132)  
 **Implemented by**: Stephanie Ta.
+
+**Addressed feedback from Hankun's peer review**: Data Section Format in the Final Report: On pages 2–3 of the final PDF report, in the data section, displaying feature descriptions in a table or bullet-point format would make it easier to read.  
+**Issue**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/issues/149>  
+**Pull request**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/issues/148>  
+**Commit**: [f00c400](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/commit/f00c4003e7e044ae3690450336b62dcc79179cda)  
+**File updated**: 
+`online_shoppers_purchasing_intention_prediction.html`
+`online_shoppers_purchasing_intention_prediction.pdf`
+`online_shoppers_purchasing_intention_prediction.qmd`
+**Implemented by**: Wai Ming Wong
+
+**Addressed feedback from Rubia**: We seem to be getting a lot of warning messages that can be ignored when the 06_tune_and_train.py is run. These messages flood the user's terminal and can be overwhelming. To address this, we should suppress warnings for this script.
+**Issue**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/issues/150>  
+**Pull request**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/151>  
+**Commit**: [f88416e](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/151/commits/f88416eda4fcb8a2da2892af79a677dee06ccfff)  
+**File updated**: `scripts/06_tune_and_train.py` (line 40)  
+**Implemented by**: Wai Ming Wong
+
+**Addressed feedback from release 0.0.1**: Programming language and/or package versions are pinned using >= instead of =. This means that each time the environment is built in the future, the most recent version of the programming language and/or package will be installed in the environment. This will lead to the environment not being able to be reproducibly built in the future.
+**Issue**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/issues/128>  
+**Pull request**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/120>  
+**Commit**: [77e0a44](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/120/commits/77e0a4438d061f0f746fc23a464e9c649212292e)  
+[a88b517](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/120/commits/a88b517062affdcd5db5c99113f5d61f87c69e76)  
+[49cb757](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/120/commits/49cb757fcd0afeadac919bc9bbb851e5fc8f520f)  
+[36ee676](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/120/commits/36ee6762ec52ad5178455cacaac66ee3e68ecc11)  
+[90198a0](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/120/commits/90198a03aa902da4bcab0881fcb4e3efd4f6d29f)  
+[79606d3](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/120/commits/79606d3415dc78022968d59848374b197fa245bc)  
+**File updated**: 
+`Dockerfile`
+`conda-linux-64.lock`
+`docker-compose.yml`
+`environment.yaml`
+**Implemented by**: Wai Ming Wong
+
