@@ -57,7 +57,25 @@ The dataset used was sourced from the UCI Machine Learning Repository [@sakar201
 
 Specifically, our target in the dataset is if the page visitor made a purchase or not (`Revenue`, true or false)
 
-The features that are in the dataset are:</br> - The number of account management pages the visitor visited (`Administrative`)</br> - The amount of time in seconds that the visitor spent on account management pages (`Administrative_Duration`)</br> - The number of informational pages the visitor visited (`Informational`)</br> - The amount of time in seconds that the visitor spent on informational pages (`Informational_Duration`)</br> - The number of product related pages the visitor visited (`ProductRelated`)</br> - The amount of time in seconds that the visitor spent on product related pages (`ProductRelated_Duration`)</br> - The average bounce rate of the pages the visitor visited (`BounceRates`)</br> - The average exit rate value of the pages that the visitor visited (`ExitRates`)</br> - The average page value of the pages that the visitor visited (`PageValues`)</br> - How close the time of visiting was to a special day, such as Mother's Day (`SpecialDay`)</br> - The operating system of the visitor (`OperatingSystems`)</br> - The browser of the visitor (`Browser`)</br> - The region from which the visitor started the session from (`Region`)</br> - How the visitor entered the website, such as a banner, SMS, etc. (`TrafficType`)</br> - The visitor type, such as "new visitor", "returning visitor", etc. (`VisitorType`)</br> - If the visitor visited the website on a weekend (`Weekend`)</br> - The month in which the visitor visited the website (`Month`)
+The features that are in the dataset are:</br> 
+
+- The number of account management pages the visitor visited (`Administrative`)</br> 
+- The amount of time in seconds that the visitor spent on account management pages (`Administrative_Duration`)</br> 
+- The number of informational pages the visitor visited (`Informational`)</br> 
+- The amount of time in seconds that the visitor spent on informational pages (`Informational_Duration`)</br> 
+- The number of product related pages the visitor visited (`ProductRelated`)</br> 
+- The amount of time in seconds that the visitor spent on product related pages (`ProductRelated_Duration`)</br> 
+- The average bounce rate of the pages the visitor visited (`BounceRates`)</br> 
+- The average exit rate value of the pages that the visitor visited (`ExitRates`)</br> 
+- The average page value of the pages that the visitor visited (`PageValues`)</br> 
+- How close the time of visiting was to a special day, such as Mother's Day (`SpecialDay`)</br> 
+- The operating system of the visitor (`OperatingSystems`)</br> 
+- The browser of the visitor (`Browser`)</br> 
+- The region from which the visitor started the session from (`Region`)</br> 
+- How the visitor entered the website, such as a banner, SMS, etc. (`TrafficType`)</br> 
+- The visitor type, such as "new visitor", "returning visitor", etc. (`VisitorType`)</br> 
+- If the visitor visited the website on a weekend (`Weekend`)</br> 
+- The month in which the visitor visited the website (`Month`)
 
 Information about the target and features was sourced from Sakar et al.'s study [@sakar2018uci].
 
