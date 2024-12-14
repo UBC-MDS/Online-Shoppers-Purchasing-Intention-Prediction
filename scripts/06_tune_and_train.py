@@ -37,6 +37,7 @@ def main(x_train_data, y_train_data, model_to, scores_to):
     # read in data
     X_train = pd.read_csv(x_train_data)
     y_train = pd.read_csv(y_train_data)
+    y_train = y_train.to_numpy().ravel()
 
     # lists of each type of feature
     numeric_cols = ['Administrative_Duration',
