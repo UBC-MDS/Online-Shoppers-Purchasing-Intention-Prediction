@@ -48,7 +48,7 @@ You can also view the issue for tracking all of the below changes [here](https:/
 `online_shoppers_purchasing_intention_prediction.qmd`
 **Implemented by**: Wai Ming Wong
 
-**Addressed feedback from Rabia**: We seem to be getting a lot of warning messages that can be ignored when the 06_tune_and_train.py is run. These messages flood the user's terminal and can be overwhelming. To address this, we should suppress warnings for this script.
+**Addressed feedback from Rubia**: We seem to be getting a lot of warning messages that can be ignored when the 06_tune_and_train.py is run. These messages flood the user's terminal and can be overwhelming. To address this, we should suppress warnings for this script.
 **Issue**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/issues/150>  
 **Pull request**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/151>  
 **Commit**: [f88416e](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/151/commits/f88416eda4fcb8a2da2892af79a677dee06ccfff)  
