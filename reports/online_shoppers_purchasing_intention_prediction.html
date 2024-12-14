@@ -123,7 +123,26 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p>The dataset used was sourced from the UCI Machine Learning Repository <span class="citation" data-cites="sakar2018uci">(<a href="#ref-sakar2018uci" role="doc-biblioref">Sakar et al. 2018</a>)</span> and can be found <a href="https://archive.ics.uci.edu/ml/datasets/Online+Shoppers+Purchasing+Intention+Dataset">here</a>. Each row in the dataset represents a web session on an e-commerce website, including details such as pages visited, time spent, and “Google Analytics” metrics for each page, such as “Bounce Rate”, “Exit Rate”, and “Page Value”. The “Special Day” variable highlights special events, while other web client attributes include OS, browser, region, traffic type, visitor type, and visit timing.</p>
 <p>Specifically, our target in the dataset is if the page visitor made a purchase or not (<code>Revenue</code>, true or false)</p>
-<p>The features that are in the dataset are:<br> - The number of account management pages the visitor visited (<code>Administrative</code>)<br> - The amount of time in seconds that the visitor spent on account management pages (<code>Administrative_Duration</code>)<br> - The number of informational pages the visitor visited (<code>Informational</code>)<br> - The amount of time in seconds that the visitor spent on informational pages (<code>Informational_Duration</code>)<br> - The number of product related pages the visitor visited (<code>ProductRelated</code>)<br> - The amount of time in seconds that the visitor spent on product related pages (<code>ProductRelated_Duration</code>)<br> - The average bounce rate of the pages the visitor visited (<code>BounceRates</code>)<br> - The average exit rate value of the pages that the visitor visited (<code>ExitRates</code>)<br> - The average page value of the pages that the visitor visited (<code>PageValues</code>)<br> - How close the time of visiting was to a special day, such as Mother’s Day (<code>SpecialDay</code>)<br> - The operating system of the visitor (<code>OperatingSystems</code>)<br> - The browser of the visitor (<code>Browser</code>)<br> - The region from which the visitor started the session from (<code>Region</code>)<br> - How the visitor entered the website, such as a banner, SMS, etc. (<code>TrafficType</code>)<br> - The visitor type, such as “new visitor”, “returning visitor”, etc. (<code>VisitorType</code>)<br> - If the visitor visited the website on a weekend (<code>Weekend</code>)<br> - The month in which the visitor visited the website (<code>Month</code>)</p>
+<p>The features that are in the dataset are:<br></p>
+<ul>
+<li>The number of account management pages the visitor visited (<code>Administrative</code>)<br></li>
+<li>The amount of time in seconds that the visitor spent on account management pages (<code>Administrative_Duration</code>)<br></li>
+<li>The number of informational pages the visitor visited (<code>Informational</code>)<br></li>
+<li>The amount of time in seconds that the visitor spent on informational pages (<code>Informational_Duration</code>)<br></li>
+<li>The number of product related pages the visitor visited (<code>ProductRelated</code>)<br></li>
+<li>The amount of time in seconds that the visitor spent on product related pages (<code>ProductRelated_Duration</code>)<br></li>
+<li>The average bounce rate of the pages the visitor visited (<code>BounceRates</code>)<br></li>
+<li>The average exit rate value of the pages that the visitor visited (<code>ExitRates</code>)<br></li>
+<li>The average page value of the pages that the visitor visited (<code>PageValues</code>)<br></li>
+<li>How close the time of visiting was to a special day, such as Mother’s Day (<code>SpecialDay</code>)<br></li>
+<li>The operating system of the visitor (<code>OperatingSystems</code>)<br></li>
+<li>The browser of the visitor (<code>Browser</code>)<br></li>
+<li>The region from which the visitor started the session from (<code>Region</code>)<br></li>
+<li>How the visitor entered the website, such as a banner, SMS, etc. (<code>TrafficType</code>)<br></li>
+<li>The visitor type, such as “new visitor”, “returning visitor”, etc. (<code>VisitorType</code>)<br></li>
+<li>If the visitor visited the website on a weekend (<code>Weekend</code>)<br></li>
+<li>The month in which the visitor visited the website (<code>Month</code>)</li>
+</ul>
 <p>Information about the target and features was sourced from Sakar et al.’s study <span class="citation" data-cites="sakar2018uci">(<a href="#ref-sakar2018uci" role="doc-biblioref">Sakar et al. 2018</a>)</span>.</p>
 <p>For data validation, we verified our data using the information provided above. There are no null values in any columns, and the data types are as expected. We also performed range checks using common sense, such as ensuring that the maximum amount of time in seconds within a day does not exceed 24 x 60 x 60 = 86,400.</p>
 <p>While we identified some duplicated rows, we decided not to remove them. As mentioned before, the dataset represents web sessions on an e-commerce website from different users. It is plausible for observations to have identical values, as they likely represent similar simple browser client information and simple visitor actions, which can result in duplicate data being recorded within the same month.</p>
@@ -177,7 +196,7 @@ Figure&nbsp;3: Correlation plot between all features in dataset
 Table&nbsp;1: The comparison of validation scores between Dummy Classifier and Logistic Regression model.
 </figcaption>
 <div aria-describedby="tbl-validation_scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="4">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="34">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -209,7 +228,7 @@ Table&nbsp;1: The comparison of validation scores between Dummy Classifier and L
 Table&nbsp;2: The comparison of test scores between Dummy Classifier and Logistic Regression model with the best parameters.
 </figcaption>
 <div aria-describedby="tbl-test_scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="5">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="35">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
