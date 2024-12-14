@@ -35,5 +35,5 @@ Addressed feedback from release 0.0.1: *Incorporate referencing to figures and t
 Issue: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/issues/147>  
 Pull request: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/104>  
 Commit: [e163fb5](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/commit/e163fb52e0397b5fb38abe23c705d0967ff75bd7)  
-File updated: `‎reports/online_shoppers_purchasing_intention_prediction.qmd` (lines 92, 94, 108, 120, and 132)
+File updated: `‎reports/online_shoppers_purchasing_intention_prediction.qmd` (lines 92, 94, 108, 120, and 132)  
 Implemented by: Stephanie Ta.
