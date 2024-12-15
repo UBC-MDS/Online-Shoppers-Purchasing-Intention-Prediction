@@ -45,17 +45,17 @@ You can also view the issue for tracking all of the below changes [here](https:/
 **File updated**: 
 `online_shoppers_purchasing_intention_prediction.html`
 `online_shoppers_purchasing_intention_prediction.pdf`
-`online_shoppers_purchasing_intention_prediction.qmd`
+`online_shoppers_purchasing_intention_prediction.qmd`  
 **Implemented by**: Wai Ming Wong
 
-**Addressed feedback from Rubia**: We seem to be getting a lot of warning messages that can be ignored when the 06_tune_and_train.py is run. These messages flood the user's terminal and can be overwhelming. To address this, we should suppress warnings for this script.
+**Addressed feedback from Rubia**: We seem to be getting a lot of warning messages that can be ignored when the 06_tune_and_train.py is run. These messages flood the user's terminal and can be overwhelming. To address this, we should suppress warnings for this script.  
 **Issue**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/issues/150>  
 **Pull request**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/151>  
 **Commit**: [f88416e](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/151/commits/f88416eda4fcb8a2da2892af79a677dee06ccfff)  
 **File updated**: `scripts/06_tune_and_train.py` (line 40)  
 **Implemented by**: Wai Ming Wong
 
-**Addressed feedback from release 0.0.1**: Programming language and/or package versions are pinned using >= instead of =. This means that each time the environment is built in the future, the most recent version of the programming language and/or package will be installed in the environment. This will lead to the environment not being able to be reproducibly built in the future.
+**Addressed feedback from release 0.0.1**: Programming language and/or package versions are pinned using >= instead of =. This means that each time the environment is built in the future, the most recent version of the programming language and/or package will be installed in the environment. This will lead to the environment not being able to be reproducibly built in the future.  
 **Issue**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/issues/128>  
 **Pull request**: <https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/120>  
 **Commit**: [77e0a44](https://github.com/UBC-MDS/Online-Shoppers-Purchasing-Intention-Prediction/pull/120/commits/77e0a4438d061f0f746fc23a464e9c649212292e)  
@@ -68,6 +68,5 @@ You can also view the issue for tracking all of the below changes [here](https:/
 `Dockerfile`
 `conda-linux-64.lock`
 `docker-compose.yml`
-`environment.yaml`
+`environment.yaml`  
 **Implemented by**: Wai Ming Wong
-
